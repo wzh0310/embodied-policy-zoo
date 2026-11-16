@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+*.log
+checkpoints/
+outputs/
+wandb/
+data/raw/
