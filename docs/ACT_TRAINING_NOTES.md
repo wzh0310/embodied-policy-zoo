@@ -140,3 +140,33 @@ loss 从 1.781 单调下降至 0.533，数值健康、无 NaN/发散。训练 `T
   `train_config.json` + `training_state/`（优化器/RNG/步数）。
   校验：`output_features.action.shape=[4]`、`input_features` 含
   `observation.images.main` 与 `observation.state`、`chunk_size=20`——与数据集 100% 对齐。
+
+---
+
+## 8. 全链路联调（3 次连续小训练）
+
+用优化配置 `configs/act_baseline.yaml`（数据缓存开启），不同 seed 连续跑 3 次 30 步训练，
+全程 `MUJOCO_GL=egl` 离屏渲染、不启 WebViewer：
+
+| run | seed | loss(step10/20/30) | 结果 |
+|---|---|---|---|
+| 1 | 2001 | 2.313 / 1.942 / 1.635 | PASS |
+| 2 | 2002 | 2.164 / 1.776 / 1.617 | PASS |
+| 3 | 2003 | 2.519 / 2.109 / 1.761 | PASS |
+
+三次均：loss 单调下降、无 NaN、无 Traceback、`End of training` 正常退出（EXIT=0）。
+**无偶发 bug**，链路稳定可复现。
+
+---
+
+## 9. 效率优化实测
+
+| 优化项 | 做法 | 实测效果 |
+|---|---|---|
+| 数据缓存 | `persistent_workers=true` + `num_workers=4` + `prefetch_factor=4` | `data_s` 首步 1.4~1.8s → 后续 0.012s（worker 常驻内存，磁盘 IO 近乎归零）|
+| 混合精度 AMP | CPU 上试 bf16 autocast | **慢 3.4×**（fp32 0.94s vs bf16 3.27s）→ 关闭；GPU 场景改用 `accelerator.mixed_precision=bf16` |
+| 评估频率 | `env_eval_freq=115`（≈5 epoch） | 减少环境交互开销；10 epoch 基线仅 2 次评估 |
+| 离屏渲染 | `MUJOCO_GL=egl` + `PYOPENGL_PLATFORM=egl` | 无显示器正常渲染评估视频，不启 WebViewer |
+
+**归一化核验**：图像 float32 `[0,1]` ✓；action 经 stats mean/std 归一化范围 `[-3.75,2.13]` 有限 ✓；
+gripper 常量维已防除零 ✓。"loss 不下降" 在本链路未复现——三次联调与冒烟均单调下降。
