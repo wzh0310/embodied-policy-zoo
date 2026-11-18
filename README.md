@@ -51,3 +51,17 @@ checkpoint 保存于 `/data/wzh/robot/outputs/act_push_cube_smoke/checkpoints/00
   评估视频：`/data/wzh/robot/outputs/act_push_cube_baseline/eval/videos_step_*/push_cube_0/eval_episode_0.mp4`。
 
 **版本**：`v0.1.0-act-baseline`（第二周里程碑：ACT 基线实验完成）。
+
+---
+
+## Day 3–4：全量训练配置 + 评估工具（v0.2.0）
+
+- **训练配置**：`configs/act_full_train.yaml`（GPU / A6000，全量 40 ep，steps=4000≈50 epoch，
+  batch16，每 5 epoch 存 checkpoint，eval_split=0.2）。4000 步完整跑通，验证损失 0.281→0.144。
+- **评估工具**：`scripts/eval_act.py`（3 seeds × 10 = 30 次离屏评估，输出成功率 / 平均完成步数 /
+  平均距离误差）+ `scripts/record_dual_view.py`（双视角演示视频）。
+- **基线指标**（ckpt 004000）：成功率 30%（9/30）、平均完成步数 36.8、平均距离误差 0.134m。
+  数据质量已提升到 40/40 成功；剩余瓶颈与后续优化见 `docs/DAY34_REPORT.md`。
+- 依赖：lerobot 环境 torch 已重装 2.6.0+cu124（GPU 可用）。
+
+**版本**：`v0.2.0-full-training-eval`。
