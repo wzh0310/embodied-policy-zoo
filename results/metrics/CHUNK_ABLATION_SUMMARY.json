@@ -1,14 +1,13 @@
 {
-  "experiment": "action_chunking_ablation",
-  "dataset": "push_cube_demos_merged(63ep)",
-  "protocol": "3 seeds x 10 rollouts, identical initial states",
+  "experiment": "action_chunking_ablation + upper-bound probe",
+  "dataset": "push_cube_demos_merged (63 episodes)",
+  "protocol": "3 seeds x 10 rollouts per run; repro runs use seeds 400/500/600",
   "results": [
     {
       "label": "chunk4",
       "chunk_size": 4,
       "success_rate": 0.13333333333333333,
       "avg_distance_error": 0.19643820048480937,
-      "avg_completion_steps": 34.0,
       "mean_jerk": 0.002666763400581355,
       "direction_flip": 0.1124867724867725
     },
@@ -17,7 +16,6 @@
       "chunk_size": 8,
       "success_rate": 0.13333333333333333,
       "avg_distance_error": 0.19964692421103114,
-      "avg_completion_steps": 34.5,
       "mean_jerk": 0.0023867759543160596,
       "direction_flip": 0.07138502063710718
     },
@@ -26,7 +24,6 @@
       "chunk_size": 16,
       "success_rate": 0.23333333333333334,
       "avg_distance_error": 0.1819775360171992,
-      "avg_completion_steps": 36.142857142857146,
       "mean_jerk": 0.0010046773075979823,
       "direction_flip": 0.04288040002325717
     },
@@ -35,22 +32,75 @@
       "chunk_size": 20,
       "success_rate": 0.3,
       "avg_distance_error": 0.14501849170900746,
-      "avg_completion_steps": 34.111111111111114,
       "mean_jerk": 0.0012177220390488703,
       "direction_flip": 0.045113325461757524
+    },
+    {
+      "label": "chunk20_24k",
+      "chunk_size": 20,
+      "success_rate": 0.2,
+      "avg_distance_error": 0.2014470674184926,
+      "mean_jerk": 0.0017150257752897838,
+      "direction_flip": 0.07673842454679379
     },
     {
       "label": "chunk20_full200ep",
       "chunk_size": 20,
       "success_rate": 0.36666666666666664,
       "avg_distance_error": 0.1597995219931287,
-      "avg_completion_steps": 35.72727272727273,
       "mean_jerk": 0.0015028715696341047,
       "direction_flip": 0.058076073772937886
+    },
+    {
+      "label": "chunk30",
+      "chunk_size": 30,
+      "success_rate": 0.4,
+      "avg_distance_error": 0.13862752310882304,
+      "mean_jerk": 0.0014445471451229727,
+      "direction_flip": 0.024360594938102543
+    },
+    {
+      "label": "chunk40",
+      "chunk_size": 40,
+      "success_rate": 0.6,
+      "avg_distance_error": 0.08156732637657114,
+      "mean_jerk": 0.0005520004449257006,
+      "direction_flip": 0.00616681455190772
+    },
+    {
+      "label": "chunk40_repro",
+      "chunk_size": 40,
+      "success_rate": 0.6,
+      "avg_distance_error": 0.05340712305315088,
+      "mean_jerk": 0.0006082362922218939,
+      "direction_flip": 0.009109009457441513
+    },
+    {
+      "label": "chunk50",
+      "chunk_size": 50,
+      "success_rate": 0.6,
+      "avg_distance_error": 0.059136228816565155,
+      "mean_jerk": 0.0005644068665181597,
+      "direction_flip": 0.0
+    },
+    {
+      "label": "chunk50_repro",
+      "chunk_size": 50,
+      "success_rate": 0.5333333333333333,
+      "avg_distance_error": 0.07161709880893895,
+      "mean_jerk": 0.0006029615828689809,
+      "direction_flip": 0.0
     }
   ],
   "best": {
-    "label": "chunk20_full200ep",
-    "success_rate": 0.367
-  }
+    "label": "chunk40",
+    "checkpoint": "/data/wzh/robot/outputs/act_chunk40/checkpoints/004000",
+    "success_rate_combined": 0.6,
+    "note": "60% on both seed groups (36/60); chunk50 similar but slightly less stable"
+  },
+  "key_findings": [
+    "success rate increases monotonically with chunk_size up to episode length; saturates at 40-50",
+    "train budget 12000->24000 steps at chunk20 OVERFITS: 36.7% -> 20%",
+    "large chunk = one-shot coherent open-loop plan; direction flip drops to 0"
+  ]
 }

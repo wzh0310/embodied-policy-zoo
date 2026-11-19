@@ -1,0 +1,105 @@
+# ACT 分块上界探针 —— chunk_size=40（近全开环极限点）
+#
+# 依据（为什么这样改，而不是照搬"数据增强 + lr1e-4 + 冻结前3层"的初始方案）:
+#   1) 失败分析显示 95% 失败为推偏/方向不准; 根因是原 40 条数据 y 起点范围窄
+#      ([-0.146,-0.092], 约 ±0.027), 而评估注入 ±0.055 随机偏移 -> 训练/评估
+#      分布不匹配。故用 collect_demos_v3 的宽偏移成功样本 ([-0.174,-0.073])
+#      扩充数据集至 63 episodes, 直接对齐评估分布。这是唯一对症的杠杆。
+#   2) 图像增强已证伪: 完整训练下成功率 30% -> 13.3%, 故 enable: false。
+#   3) lr 消融: 1e-4/3e-4/5e-4 均低于 1e-5, 故沿用最优 1e-5 (而非任务的 1e-4)。
+#   4) 该 LeRobot 0.7.0 定制版 ACT 无"冻结 backbone 层"参数, ImageNet 预训练
+#      权重已开启 (pretrained_backbone_weights 默认 ResNet18_Weights.IMAGENET1K_V1)。
+#   5) 余弦退火可用 (CosineAnnealingWithWarmupSchedulerConfig), 加入 warmup100。
+#   6) batch 16 -> 32 (A6000 49G 显存充足), 提升梯度稳定性。
+
+output_dir: /data/wzh/robot/outputs/act_chunk40
+job_name: act_chunk40
+seed: 1000
+resume: false
+
+# ----------------------------- 训练节奏 ------------------------------------
+steps: 4000                 # 与基线同训练步数, 公平对比"数据+批量"的效果
+batch_size: 32              # 任务要求: 16 -> 32
+num_workers: 4
+prefetch_factor: 4
+persistent_workers: true
+log_freq: 20
+save_freq: 1000             # 每 ~25% 存一次
+save_checkpoint: true
+eval_steps: 200             # 每 200 步算 held-out loss, 监控过拟合
+max_eval_samples: 0
+env_eval_freq: 1000000000   # 关闭内置 rollout, 训练后用 scripts/eval.py 统一评估
+tf32: true
+cudnn_deterministic: false
+
+# ----------------------------- 余弦退火调度 --------------------------------
+scheduler:
+  type: cosine_annealing_with_warmup
+  num_warmup_steps: 100
+
+# ----------------------------- 数据集 (扩展后) -----------------------------
+dataset:
+  repo_id: push_cube_expert
+  repo_type: dataset
+  root: /data/wzh/robot/mujoco-studio-lab/data/push_cube_demos_merged
+  episodes: null
+  exclude_episodes: null
+  eval_split: 0.2
+  use_imagenet_stats: true
+  video_backend: pyav
+  revision: null
+  streaming: false
+  image_transforms:
+    enable: false           # 图像增强已证伪: 完整训练成功率 30% -> 13.3%
+    backend: dataloader
+    max_num_transforms: 3
+    random_order: false
+
+# ----------------------------- 策略: ACT -----------------------------------
+policy:
+  type: act
+  device: cuda
+  push_to_hub: false
+  repo_id: local/act_chunk40
+
+  n_obs_steps: 1
+  chunk_size: 40
+  n_action_steps: 40
+
+  vision_backbone: resnet18
+  dim_model: 128
+  n_heads: 8
+  dim_feedforward: 512
+  n_encoder_layers: 1
+  n_decoder_layers: 1
+  dropout: 0.1
+
+  use_vae: true
+  latent_dim: 8
+  n_vae_encoder_layers: 1
+  kl_weight: 1.0
+
+  optimizer_lr: 1e-5         # 消融最优 (任务卡的 1e-4 已证伪)
+  optimizer_lr_backbone: 1e-5
+  optimizer_weight_decay: 1e-4
+  use_amp: false
+
+accelerator:
+  mixed_precision: "no"      # 必须加引号; bf16 会让内置 rollout .numpy() 崩溃
+
+env:
+  type: push_cube
+  task: push_cube
+  fps: 50
+  episode_length: 50
+
+eval:
+  n_episodes: 1
+  batch_size: 1
+  use_async_envs: false
+  recording: false
+  max_episode_steps: 50
+
+trackio:
+  enable: false
+  project: lerobot

@@ -25,3 +25,12 @@
 - `scripts/eval_chunk_ablation.py` —— 带平滑度指标（mean_jerk / direction_flip）的评估入口
 - `configs/act_push_cube/ablation/chunk{4,8,16}.yaml` + `chunk20_full200ep.yaml` —— 消融配置
 - 完整分析见 `docs/CHUNK_ABLATION_REPORT.md`。结论: chunk20 最优; 全量训练 36.7%, 80% 未达成。
+
+分块上界延伸实验（回答"增大 chunk / 增加步数能否更好"）新增：
+
+- `metrics/chunk_ablation_chunk{30,40,50}.json` —— chunk 上界探针（4000 步）：30→40%、40→60%、50→60%
+- `metrics/chunk_ablation_chunk{40,50}_repro.json` —— 全新种子组复现：chunk40 两种子组均 60%（36/60，稳固）
+- `metrics/chunk_ablation_chunk20_24k.json` —— 训练量翻倍探针：24000 步过拟合，36.7%→20%
+- 配置：`configs/act_push_cube/ablation/chunk{30,40,50}.yaml`、`chunk20_24k.yaml`
+- 结论：**最优 chunk_size=40（接近回合上限），成功率 30%→60% 翻倍；增加步数有害（过拟合）**。
+  新最优 checkpoint：outputs/act_chunk40/checkpoints/004000。详见 `docs/CHUNK_ABLATION_REPORT.md` 第六节。

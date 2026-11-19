@@ -1,0 +1,13 @@
+{
+  "label": "chunk30",
+  "chunk_size": 30,
+  "n_action_steps": 30,
+  "checkpoint": "/data/wzh/robot/outputs/act_chunk30/checkpoints/004000",
+  "n_rollouts": 30,
+  "success_rate": 0.4,
+  "avg_completion_steps": 35.25,
+  "avg_distance_error": 0.13862752310882304,
+  "mean_jerk": 0.0014445471451229727,
+  "direction_flip": 0.024360594938102543,
+  "mean_action_norm": 0.017430232465267183
+}
