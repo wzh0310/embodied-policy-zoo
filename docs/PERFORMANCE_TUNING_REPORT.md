@@ -103,6 +103,6 @@
 
 - 配置：`configs/act_push_cube/tuning_train.yaml`
 - 训练日志：`results/logs/tuning_train.log`（4000 步完整 loss/MSE 曲线）
-- Checkpoint：`/data/wzh/robot/outputs/act_push_cube_tuning/checkpoints/004000`（及中间 1000/2000/3000）
+- Checkpoint：`${OUTPUTS_DIR}/act_push_cube_tuning/checkpoints/004000`（及中间 1000/2000/3000）
 - 指标：`results/metrics/tuning_final_metrics.json`、`tuning_wide_metrics.json`、`baseline_wide_metrics.json`
-- 合并数据集：`/data/wzh/robot/mujoco-studio-lab/data/push_cube_demos_merged`（63 episodes）
+- 合并数据集：`${STUDIO_LAB_ROOT}/data/push_cube_demos_merged`（63 episodes）

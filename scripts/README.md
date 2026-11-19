@@ -10,7 +10,7 @@
 | `eval.py` | 固定种子量化评估（3×10=30 回合，输出指标 JSON） | `python scripts/eval.py --checkpoint <ckpt>/004000` |
 | `record_video.py` | 双视角演示视频录制（全局 + 任务相机） | `python scripts/record_video.py --checkpoint <ckpt>/004000` |
 
-三者均通过环境变量 `STUDIO_LAB_ROOT` 定位兄弟仓库 `mujoco-studio-lab`（数据集 + 自定义环境），默认 `/data/wzh/robot/mujoco-studio-lab`。
+三者均通过环境变量 `STUDIO_LAB_ROOT` 定位兄弟仓库 `mujoco-studio-lab`（数据集 + 自定义环境），默认与仓库同级的 `../mujoco-studio-lab`（可由 `STUDIO_LAB_ROOT` 覆盖）。
 
 ## 辅助工具
 

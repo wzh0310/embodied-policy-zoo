@@ -95,7 +95,7 @@ python scripts/train.py --config configs/act_push_cube/bc_baseline.yaml
 
 # 同一测试集对齐评估（BC vs ACT）
 python scripts/eval_bc_comparison.py \
-  --checkpoint act=/data/wzh/robot/outputs/act_chunk40/checkpoints/004000 \
-  --checkpoint bc=/data/wzh/robot/outputs/bc_baseline/checkpoints/004000 \
+  --checkpoint act=${OUTPUTS_DIR}/act_chunk40/checkpoints/004000 \
+  --checkpoint bc=${OUTPUTS_DIR}/bc_baseline/checkpoints/004000 \
   --out results/metrics/BC_VS_ACT_COMPARISON.json
 ```

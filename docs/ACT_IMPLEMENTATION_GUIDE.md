@@ -15,7 +15,7 @@
 | 数据集 / 环境接入 / ACT 训练 / 评估 | `lerobot` | lerobot 0.7.0, mujoco 4.0.1（补装）, accelerate 1.16.0 |
 
 ```bash
-source /opt/miniconda3/etc/profile.d/conda.sh && conda activate lerobot
+conda activate lerobot
 # 若缺失：
 pip install "accelerate>=1.0,<2.0"   # 训练必需
 pip install mujoco==4.0.1            # 环境评估渲染必需（lerobot 环境原本没有）
@@ -190,14 +190,14 @@ loss 从 1.781 单调下降至 0.334（后期趋缓），KLD 项从 1.10 降到 
 ## 6. 一键复现
 
 ```bash
-source /opt/miniconda3/etc/profile.d/conda.sh && conda activate lerobot
+conda activate lerobot
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
-cd /data/wzh/robot/embodied-policy-zoo
+cd ${ZOO}
 # 冒烟（100 步）：
 STEPS=100 bash scripts/train_act_push_cube.sh
 # 基线（10 epoch，优化配置）：
-CONFIG=/data/wzh/robot/mujoco-studio-lab/configs/act_baseline.yaml \
-OUTPUT_DIR=/data/wzh/robot/outputs/act_push_cube_baseline \
+CONFIG=${STUDIO_LAB_ROOT}/configs/act_baseline.yaml \
+OUTPUT_DIR=${OUTPUTS_DIR}/act_push_cube_baseline \
 bash scripts/train_act_push_cube.sh
 ```
 

@@ -41,7 +41,7 @@
 
 **解决**（不必装整个 `lerobot[training]`，只补必需项）：
 ```bash
-source /opt/miniconda3/etc/profile.d/conda.sh && conda activate lerobot
+conda activate lerobot
 pip install "accelerate>=1.0,<2.0"     # 实测装到 1.16.0 即可
 ```
 `peft` 仅在 `use_peft=true` 时需要；`trackio/wandb/tensorboard` 在 `trackio.enable=false` 时不需要。
@@ -61,7 +61,7 @@ draccus 解析到 `env.type=push_cube` 时报 "Couldn't find a choice class for 
 先把仓库根加入 `sys.path` 并 import 环境模块，触发 `@EnvConfig.register_subclass("push_cube")`：
 ```python
 import sys
-sys.path.insert(0, "/data/wzh/robot/mujoco-studio-lab")
+sys.path.insert(0, "${STUDIO_LAB_ROOT}")
 import envs.lerobot_push_cube_env   # 触发注册
 from lerobot.scripts.lerobot_train import main
 main()

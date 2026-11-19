@@ -36,7 +36,7 @@
 ```bash
 # 1. 批量录制成功片段
 python scripts/record_demo_clips.py \
-  --checkpoint /data/wzh/robot/outputs/act_chunk40/checkpoints/004000 \
+  --checkpoint ${OUTPUTS_DIR}/act_chunk40/checkpoints/004000 \
   --num-clips 4 --out-dir results/videos/.clips
 # 2. 合成为约 15 秒短视频
 python scripts/make_demo_video.py
