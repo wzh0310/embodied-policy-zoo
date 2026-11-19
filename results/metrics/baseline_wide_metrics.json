@@ -1,0 +1,95 @@
+{
+  "checkpoint": "/data/wzh/robot/outputs/act_push_cube_full/checkpoints/004000",
+  "n_rollouts": 10,
+  "success_rate": 0.0,
+  "avg_completion_steps": null,
+  "avg_distance_error": 0.2631352880700621,
+  "avg_distance_error_success": null,
+  "avg_total_reward": -0.18582939349058508,
+  "seeds": [
+    100
+  ],
+  "episodes_per_seed": 10,
+  "per_episode": [
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.06980403284097599,
+      "total_reward": -0.0265362286249367,
+      "seed": 100,
+      "episode": 0
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.3584527880277771,
+      "total_reward": -0.10664817118307095,
+      "seed": 100,
+      "episode": 1
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.40752836193302105,
+      "total_reward": -0.14035086310475203,
+      "seed": 100,
+      "episode": 2
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.48575839390116743,
+      "total_reward": -0.2279754262945157,
+      "seed": 100,
+      "episode": 3
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.4865561023481634,
+      "total_reward": -1.2342793109966077,
+      "seed": 100,
+      "episode": 4
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.17751467037669424,
+      "total_reward": -0.034551454318022805,
+      "seed": 100,
+      "episode": 5
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.09566711852934263,
+      "total_reward": -0.02982590103933848,
+      "seed": 100,
+      "episode": 6
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.17230738535875872,
+      "total_reward": -0.024405971936238544,
+      "seed": 100,
+      "episode": 7
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.27148449805730357,
+      "total_reward": -0.04337918461840507,
+      "seed": 100,
+      "episode": 8
+    },
+    {
+      "success": false,
+      "steps": 50,
+      "dist": 0.10627952932741724,
+      "total_reward": 0.009658577210036963,
+      "seed": 100,
+      "episode": 9
+    }
+  ]
+}
