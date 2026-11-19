@@ -16,3 +16,12 @@
 
 调优训练日志见 `results/logs/tuning_train.log`（受 .gitignore 的 `*.log` 规则约束未入库，仅存于运行环境）；
 完整分析见 `docs/PERFORMANCE_TUNING_REPORT.md`。
+
+动作分块（Action Chunking）消融新增指标（同一测试集 3×10 回合，含动作平滑度）:
+
+- `metrics/CHUNK_ABLATION_SUMMARY.json` —— 四组分块长度对比汇总（含最优判定）
+- `metrics/chunk_ablation_chunk{4,8,16,20}.json` —— 各组 4000 步评估明细
+- `metrics/chunk_ablation_chunk20_full200ep.json` —— 最优 chunk20 的 12000 步全量训练评估（36.7%）
+- `scripts/eval_chunk_ablation.py` —— 带平滑度指标（mean_jerk / direction_flip）的评估入口
+- `configs/act_push_cube/ablation/chunk{4,8,16}.yaml` + `chunk20_full200ep.yaml` —— 消融配置
+- 完整分析见 `docs/CHUNK_ABLATION_REPORT.md`。结论: chunk20 最优; 全量训练 36.7%, 80% 未达成。

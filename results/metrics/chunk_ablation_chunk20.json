@@ -1,0 +1,13 @@
+{
+  "label": "chunk20",
+  "chunk_size": 20,
+  "n_action_steps": 20,
+  "checkpoint": "/data/wzh/robot/outputs/act_push_cube_tuning/checkpoints/004000",
+  "n_rollouts": 30,
+  "success_rate": 0.3,
+  "avg_completion_steps": 34.111111111111114,
+  "avg_distance_error": 0.14501849170900746,
+  "mean_jerk": 0.0012177220390488703,
+  "direction_flip": 0.045113325461757524,
+  "mean_action_norm": 0.016713174556692443
+}

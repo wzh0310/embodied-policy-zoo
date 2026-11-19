@@ -1,0 +1,56 @@
+{
+  "experiment": "action_chunking_ablation",
+  "dataset": "push_cube_demos_merged(63ep)",
+  "protocol": "3 seeds x 10 rollouts, identical initial states",
+  "results": [
+    {
+      "label": "chunk4",
+      "chunk_size": 4,
+      "success_rate": 0.13333333333333333,
+      "avg_distance_error": 0.19643820048480937,
+      "avg_completion_steps": 34.0,
+      "mean_jerk": 0.002666763400581355,
+      "direction_flip": 0.1124867724867725
+    },
+    {
+      "label": "chunk8",
+      "chunk_size": 8,
+      "success_rate": 0.13333333333333333,
+      "avg_distance_error": 0.19964692421103114,
+      "avg_completion_steps": 34.5,
+      "mean_jerk": 0.0023867759543160596,
+      "direction_flip": 0.07138502063710718
+    },
+    {
+      "label": "chunk16",
+      "chunk_size": 16,
+      "success_rate": 0.23333333333333334,
+      "avg_distance_error": 0.1819775360171992,
+      "avg_completion_steps": 36.142857142857146,
+      "mean_jerk": 0.0010046773075979823,
+      "direction_flip": 0.04288040002325717
+    },
+    {
+      "label": "chunk20",
+      "chunk_size": 20,
+      "success_rate": 0.3,
+      "avg_distance_error": 0.14501849170900746,
+      "avg_completion_steps": 34.111111111111114,
+      "mean_jerk": 0.0012177220390488703,
+      "direction_flip": 0.045113325461757524
+    },
+    {
+      "label": "chunk20_full200ep",
+      "chunk_size": 20,
+      "success_rate": 0.36666666666666664,
+      "avg_distance_error": 0.1597995219931287,
+      "avg_completion_steps": 35.72727272727273,
+      "mean_jerk": 0.0015028715696341047,
+      "direction_flip": 0.058076073772937886
+    }
+  ],
+  "best": {
+    "label": "chunk20_full200ep",
+    "success_rate": 0.367
+  }
+}
