@@ -4,16 +4,16 @@
 
  输入 results/videos/.clips/clip_*.mp4（双视角：左第三人称 / 右第一人称），
  每段截取前若干帧，等长拼接，统一到 640x224（保持双视角 2:1），加片头文字标注，
- 输出 results/videos/demo_short.mp4。若片段不足则按实际数量合成。
+ 输出 assets/videos/demo_short.mp4。若片段不足则按实际数量合成。
 """
 import glob
 import json
 import os
 import subprocess
 
-REPO = "/data/wzh/robot/embodied-policy-zoo"
-VID = os.path.join(REPO, "results/videos")
-CLIPS = os.path.join(VID, ".clips")
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+VID = os.path.join(REPO, "assets", "videos")
+CLIPS = os.path.join(REPO, "results", "videos", ".clips")
 
 
 def main():

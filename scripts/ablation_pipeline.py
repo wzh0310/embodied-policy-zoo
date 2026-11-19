@@ -22,12 +22,13 @@ import time
 
 import yaml
 
-REPO = "/data/wzh/robot/mujoco-studio-lab"
+ZOO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+REPO = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(ZOO), "mujoco-studio-lab"))
 BASE_CFG = os.path.join(REPO, "configs", "act_full_train.yaml")
 TRAINER = os.path.join(REPO, "scripts", "train_act_push_cube.py")
 EVALUATOR = os.path.join(REPO, "scripts", "eval_act.py")
-RESULTS = os.path.join(REPO, "data", "ablation_results.json")
-OUTPUTS = "/data/wzh/robot/outputs"
+RESULTS = os.path.join(ZOO, "results", "metrics", "ablation_results.json")
+OUTPUTS = os.environ.get("OUTPUTS_DIR", os.path.join(os.path.dirname(ZOO), "outputs"))
 
 # ---- experiment definitions: name -> dict of overrides -----------------------
 # structure mirrors the nested yaml; we do a deep-merge onto the base config.

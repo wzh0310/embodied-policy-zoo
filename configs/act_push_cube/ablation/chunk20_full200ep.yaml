@@ -12,7 +12,7 @@
 #   5) 余弦退火可用 (CosineAnnealingWithWarmupSchedulerConfig), 加入 warmup100。
 #   6) batch 16 -> 32 (A6000 49G 显存充足), 提升梯度稳定性。
 
-output_dir: /data/wzh/robot/outputs/act_chunk20_full
+output_dir: ${OUTPUTS_DIR}/act_chunk20_full
 job_name: act_chunk20_full
 seed: 1000
 resume: false
@@ -41,7 +41,7 @@ scheduler:
 dataset:
   repo_id: push_cube_expert
   repo_type: dataset
-  root: /data/wzh/robot/mujoco-studio-lab/data/push_cube_demos_merged
+  root: ${STUDIO_LAB_ROOT}/data/push_cube_demos_merged
   episodes: null
   exclude_episodes: null
   eval_split: 0.2

@@ -9,3 +9,6 @@ data/raw/
 
 # 演示视频中间片段（成片见 demo_short.mp4）
 results/videos/.clips/
+
+# 训练入口展开配置占位符时生成的临时文件
+.materialized_*.yaml

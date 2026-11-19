@@ -7,7 +7,7 @@ import sys
 
 from PIL import Image, ImageDraw
 
-REPO = "/data/wzh/robot/embodied-policy-zoo"
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 from plot_comparison_curves import panel, font, C_ACT, C_BC, BG, TXT, SUB  # noqa: E402
 

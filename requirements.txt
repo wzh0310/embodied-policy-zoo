@@ -1,0 +1,38 @@
+# embodied-policy-zoo 依赖清单
+# 基于 LeRobot v0.7.0（定制版，源码安装）实测环境，Python 3.12 / CUDA 12.4。
+# 安装顺序见下方注释，版本为本仓库验证过的可用组合。
+
+# ---- 核心：PyTorch（需与宿主机驱动匹配，本环境驱动 550.107.02 / CUDA 12.4）----
+# pip install --index-url https://download.pytorch.org/whl/cu124 \
+#     torch==2.6.0+cu124 torchvision==0.21.0+cu124
+torch==2.6.0+cu124
+torchvision==0.21.0+cu124
+
+# ---- LeRobot 0.7.0（本仓库基于源码定制版，PyPI 发行包名相同）----
+lerobot==0.7.0
+
+# ---- 训练 / 策略依赖 ----
+accelerate==1.16.0
+datasets==5.2.0
+draccus==0.11.6
+einops==0.8.2
+huggingface-hub>=0.24
+safetensors>=0.4
+numpy==2.2.6
+PyYAML==6.0.3
+pillow==13.0.0
+
+# ---- 仿真环境依赖（由兄弟仓库 mujoco-studio-lab 提供，评估/录制时需要）----
+mujoco==4.0.1
+gymnasium==1.4.0
+av==15.1.0                # LeRobot 0.7.0 视频编解码兼容版本
+
+# ---- 可选：绘图 / 视频合成 ----
+# 曲线脚本仅用 Pillow（无需 matplotlib）；短视频合成调用系统 ffmpeg。
+# ffmpeg                    # apt install ffmpeg（系统级，非 pip）
+
+# 说明
+# 1) LeRobot 0.7.0 元数据声明 torch>=2.7，但本仓库在 2.6.0+cu124 下训练/评估/数据加载
+#    全部验证通过；cu124 是与驱动 12.4 匹配的最高官方 wheel。
+# 2) 本仓库的 push_cube 环境来自兄弟仓库 mujoco-studio-lab，需单独克隆并设置
+#    STUDIO_LAB_ROOT（见 README「快速上手」）。

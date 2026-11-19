@@ -8,7 +8,7 @@
 
 用法：
     python scripts/plot_training_curve.py \
-        --log /data/wzh/robot/outputs/act_push_cube_full_train.log \
+        --log /path/to/outputs/act_push_cube_full_train.log \
         --out results/metrics/training_curve.png
 """
 import argparse

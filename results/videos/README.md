@@ -1,12 +1,9 @@
-# videos
+# videos —— 录制中间产物
 
-| 文件 | 内容 |
-|---|---|
-| `dual_view.mp4` | 双视角成功回合（左 global_cam 第三人称 + 右 top_cam 第一人称） |
-| `success_rollout.mp4` | 策略单视角成功 rollout |
-| `expert_demo.mp4` | 专家演示轨迹 |
-| `keyframe_scene.png` / `keyframe_goal.png` | 场景概览 / 目标达成关键帧 |
+成片与关键帧已归档到 [`../../assets/`](../../assets/README.md)：
 
-视频由 `scripts/record_video.py` 录制（fps=50，双视角帧 224×448×3）。
+- `demo_short.mp4`（主演示短视频）、`dual_view.mp4`、`success_rollout.mp4`、`expert_demo.mp4`
+- `demo_short_preview.png`、`keyframe_scene.png`、`keyframe_goal.png`
 
-| `demo_short.mp4` | 4 个成功回合合成的 13.8 秒双视角演示短视频（本次产出） |
+本目录仅保留 `.clips/`（批量录制的单回合片段，属于中间产物，已在 `.gitignore` 中忽略）。
+重新生成成片：先 `python scripts/record_demo_clips.py`，再 `python scripts/make_demo_video.py`。

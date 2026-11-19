@@ -30,8 +30,9 @@ AXIS = (60, 60, 70)
 TXT = (35, 35, 45)
 SUB = (110, 115, 125)
 
-ACT_LOG = "/data/wzh/robot/outputs/train_chunk40.log"
-BC_LOG = "/data/wzh/robot/outputs/bc_baseline_train.log"
+OUT_ROOT = os.environ.get("OUTPUTS_DIR", os.path.join(os.path.dirname(REPO), "outputs"))
+ACT_LOG = os.path.join(OUT_ROOT, "train_chunk40.log")
+BC_LOG = os.path.join(OUT_ROOT, "bc_baseline_train.log")
 
 
 def font(sz, bold=False):

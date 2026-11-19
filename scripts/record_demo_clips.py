@@ -10,7 +10,7 @@
  用法（lerobot 环境）
 --------------------
     python scripts/record_demo_clips.py \
-        --checkpoint /data/wzh/robot/outputs/act_chunk40/checkpoints/004000 \
+        --checkpoint /path/to/outputs/act_chunk40/checkpoints/004000 \
         --num-clips 4 --out-dir results/videos/.clips
 """
 import argparse
@@ -20,7 +20,7 @@ import sys
 import numpy as np
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 for p in (REPO, STUDIO_LAB, os.path.join(STUDIO_LAB, "envs")):
     if p not in sys.path:
         sys.path.insert(0, p)

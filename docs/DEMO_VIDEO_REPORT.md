@@ -2,7 +2,7 @@
 
 ## 成片
 
-[`results/videos/demo_short.mp4`](results/videos/demo_short.mp4) —— 约 13.8 秒，
+[`assets/videos/demo_short.mp4`](assets/videos/demo_short.mp4) —— 约 13.8 秒，
 896×224 双视角，25 fps，H.264。
 
 | 属性 | 值 |
@@ -42,4 +42,4 @@ python scripts/record_demo_clips.py \
 python scripts/make_demo_video.py
 ```
 
-首帧预览：[`results/videos/demo_short_preview.png`](results/videos/demo_short_preview.png)
+首帧预览：[`assets/figures/demo_short_preview.png`](assets/figures/demo_short_preview.png)

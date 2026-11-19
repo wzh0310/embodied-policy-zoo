@@ -28,7 +28,7 @@ make_policy 加载权重，并使用其自带的 pre/post processor，确保预�
 用法（在 lerobot conda 环境）
 ---------------------------
     python scripts/eval.py \
-        --checkpoint /data/wzh/robot/outputs/act_push_cube_full/checkpoints/004000 \
+        --checkpoint /path/to/outputs/act_push_cube_full/checkpoints/004000 \
         --out results/metrics/baseline_metrics.json
 """
 import argparse
@@ -42,7 +42,7 @@ import torch
 
 # ---- 跨仓路径解析 ----
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 if not os.path.isdir(STUDIO_LAB):
     raise SystemExit(
         f"[eval] 找不到兄弟仓库 mujoco-studio-lab: {STUDIO_LAB}\n"

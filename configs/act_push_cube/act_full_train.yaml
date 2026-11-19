@@ -11,7 +11,7 @@
 #   - eval_steps>0 计算 held-out loss; save_freq 每 5 epoch
 #   - output_dir 全新路径 (LeRobot 要求不存在)
 
-output_dir: /data/wzh/robot/outputs/act_push_cube_full
+output_dir: ${OUTPUTS_DIR}/act_push_cube_full
 job_name: act_push_cube_full
 seed: 1000
 resume: false
@@ -35,7 +35,7 @@ cudnn_deterministic: false
 dataset:
   repo_id: push_cube_expert
   repo_type: dataset
-  root: /data/wzh/robot/mujoco-studio-lab/data/push_cube_demos
+  root: ${STUDIO_LAB_ROOT}/data/push_cube_demos
   episodes: null
   exclude_episodes: null
   eval_split: 0.2            # 8:2 之外再从 train 留 20% 作 held-out, 判断过拟合

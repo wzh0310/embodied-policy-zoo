@@ -13,7 +13,7 @@ import sys
 import numpy as np
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 for p in (REPO, os.path.join(REPO, "scripts"), STUDIO_LAB,
           os.path.join(STUDIO_LAB, "envs")):
     if p not in sys.path:
@@ -22,10 +22,11 @@ for p in (REPO, os.path.join(REPO, "scripts"), STUDIO_LAB,
 from push_cube_env import PushCubeEnv  # noqa: E402
 from eval_bc_comparison import FIXED_SEEDS, load_policy_from_checkpoint, run_episode  # noqa: E402
 
+OUT_ROOT = os.environ.get("OUTPUTS_DIR", os.path.join(os.path.dirname(REPO), "outputs"))
 CKPTS = {
-    20: "/data/wzh/robot/outputs/act_data20/checkpoints/004000",
-    40: "/data/wzh/robot/outputs/act_data40/checkpoints/004000",
-    63: "/data/wzh/robot/outputs/act_chunk40/checkpoints/004000",  # 全量 = 最优 ACT checkpoint
+    20: os.path.join(OUT_ROOT, "act_data20", "checkpoints", "004000"),
+    40: os.path.join(OUT_ROOT, "act_data40", "checkpoints", "004000"),
+    63: os.path.join(OUT_ROOT, "act_chunk40", "checkpoints", "004000"),
 }
 
 

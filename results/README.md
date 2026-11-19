@@ -1,36 +1,53 @@
-# results
+# results —— 实验结果归档
 
-本目录存放交付的复现产物（均已入库）：
+所有指标均在容器内由统一评估脚本产出，原始 JSON 与图表均已入库。
+**跨实验可比的前提**：固定种子协议 + 统一指标定义；不同实验的测试集在表格中显式标注。
 
-- `logs/` —— 训练日志（基线 + 增强实验各一份完整 4000 步日志）
-- `metrics/` —— 量化指标 JSON、14 组消融结果、失败分析、训练曲线 PNG
-- `videos/` —— 双视角演示、成功回合、专家演示 MP4 + 关键帧截图
+## 目录
 
-所有指标由 `scripts/eval.py` 在固定种子（3×10=30 回合）下产出，曲线由 `scripts/plot_training_curve.py` 从日志生成。
+| 目录 | 内容 |
+|---|---|
+| `logs/` | 训练日志（基线 / 增强 / chunk20 / 调优） |
+| `metrics/` | 量化指标 JSON、对比表格、训练与消融曲线图 |
+| `videos/` | 录制中间片段（`.clips/`，已忽略）；成片见 `assets/` |
 
-本轮基础训练调优（数据分布扩展 + batch32 + 余弦退火）新增指标：
+## 核心实验条件速查
 
-- `metrics/tuning_final_metrics.json` —— 调优模型标准评估（3×10 回合）：成功率 30%、平均步数 34.1、距离误差 0.145 m
-- `metrics/tuning_wide_metrics.json` —— 调优模型宽偏移鲁棒性探针：成功率 10%
-- `metrics/baseline_wide_metrics.json` —— 基线模型同款宽偏移探针：成功率 0%
+| 实验 | 数据 | 训练配置 | 评估协议 | 结果 |
+|---|---|---|---|---|
+| 基线 | 40 条 | chunk20 / 4000 步 / batch16 | 3 种子 ×10 = 30 回合 | 30.0% |
+| 性能调优 | 63 条合并 | chunk20 / batch32 / lr1e-5 / 余弦退火 / 4000 步 | 30 回合 | 30.0%；宽偏移鲁棒性 0%→10% |
+| chunk 消融 | 63 条 | chunk 4/8/16/20/30/40/50 / 4000 步 | 30 回合 | 13/13/23/30/40/60/60% |
+| 训练量探针 | 63 条 | chunk20 / 24000 步 | 30 回合 | 20%（过拟合） |
+| BC 基线 | 63 条 | 无 CVAE + chunk1 / 4000 步 | **50 固定种子** | 42.0% |
+| 最优 ACT | 63 条 | chunk40 / 4000 步 | **50 固定种子** | 50.0% |
+| 数据量消融 | 20 / 40 / 63 条 | chunk40 / 4000 步 | 50 固定种子 | 24% / 34% / 50% |
 
-调优训练日志见 `results/logs/tuning_train.log`（受 .gitignore 的 `*.log` 规则约束未入库，仅存于运行环境）；
-完整分析见 `docs/PERFORMANCE_TUNING_REPORT.md`。
+> 注意：早期实验用 30 回合协议，BC 对比及之后的实验统一用 50 固定种子协议。
+> 两组成功率不可直接混比；同一表格内的对比均使用相同协议。
 
-动作分块（Action Chunking）消融新增指标（同一测试集 3×10 回合，含动作平滑度）:
+## 关键指标文件
 
-- `metrics/CHUNK_ABLATION_SUMMARY.json` —— 四组分块长度对比汇总（含最优判定）
-- `metrics/chunk_ablation_chunk{4,8,16,20}.json` —— 各组 4000 步评估明细
-- `metrics/chunk_ablation_chunk20_full200ep.json` —— 最优 chunk20 的 12000 步全量训练评估（36.7%）
-- `scripts/eval_chunk_ablation.py` —— 带平滑度指标（mean_jerk / direction_flip）的评估入口
-- `configs/act_push_cube/ablation/chunk{4,8,16}.yaml` + `chunk20_full200ep.yaml` —— 消融配置
-- 完整分析见 `docs/CHUNK_ABLATION_REPORT.md`。结论: chunk20 最优; 全量训练 36.7%, 80% 未达成。
+| 文件 | 内容 |
+|---|---|
+| `metrics/BC_VS_ACT_COMPARISON.json` | ACT vs BC 对齐评估（50 种子，成功率/步数/位置误差，含逐回合明细） |
+| `metrics/ACTION_MSE.json` | 验证集动作 MSE（teacher-forcing，13 条 held-out episode / 488 帧） |
+| `metrics/QUANTITATIVE_TABLE.md` | 四指标对比表（可直接用于简历/文档） |
+| `metrics/CHECKPOINT_CURVE.json` | 8 个 checkpoint 的成功率（训练/成功率曲线原始数据） |
+| `metrics/DATA_ABLATION.json` | 数据量消融（20/40/63）原始指标 |
+| `metrics/CHUNK_ABLATION_SUMMARY.json` | chunk 全量消融汇总 |
+| `metrics/chunk_ablation_*.json` | 各 chunk 配置评估明细（含复现组） |
+| `metrics/ablation_results.json` | 14 组控制变量消融 |
+| `metrics/failure_analysis.json` | 失败回合归因统计 |
+| `metrics/tuning_*.json` / `baseline_wide_metrics.json` | 调优与宽偏移鲁棒性探针 |
 
-分块上界延伸实验（回答"增大 chunk / 增加步数能否更好"）新增：
+## 图表
 
-- `metrics/chunk_ablation_chunk{30,40,50}.json` —— chunk 上界探针（4000 步）：30→40%、40→60%、50→60%
-- `metrics/chunk_ablation_chunk{40,50}_repro.json` —— 全新种子组复现：chunk40 两种子组均 60%（36/60，稳固）
-- `metrics/chunk_ablation_chunk20_24k.json` —— 训练量翻倍探针：24000 步过拟合，36.7%→20%
-- 配置：`configs/act_push_cube/ablation/chunk{30,40,50}.yaml`、`chunk20_24k.yaml`
-- 结论：**最优 chunk_size=40（接近回合上限），成功率 30%→60% 翻倍；增加步数有害（过拟合）**。
-  新最优 checkpoint：outputs/act_chunk40/checkpoints/004000。详见 `docs/CHUNK_ABLATION_REPORT.md` 第六节。
+| 文件 | 内容 |
+|---|---|
+| `metrics/LOSS_CURVE_COMPARISON.png` | ACT vs BC 训练 L1 loss / 验证 loss 曲线 |
+| `metrics/SUCCESS_CURVE.png` | 成功率随 checkpoint 步数变化（ACT 44→30→60→50%，BC 18→12→32→42%） |
+| `metrics/DATA_ABLATION_CURVE.png` | 数据量-成功率折线（24→34→50%） |
+| `metrics/training_curve.png` | 基线训练/验证 loss 曲线 |
+
+演示视频与关键帧见 [`../assets/`](../assets/README.md)，实验分析见 [`../docs/`](../docs/)。

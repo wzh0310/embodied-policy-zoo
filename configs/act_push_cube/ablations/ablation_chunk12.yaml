@@ -1,4 +1,4 @@
-output_dir: /data/wzh/robot/outputs/ablation_chunk12
+output_dir: ${OUTPUTS_DIR}/ablation_chunk12
 job_name: ablation_chunk12
 seed: 1000
 resume: false
@@ -18,7 +18,7 @@ cudnn_deterministic: false
 dataset:
   repo_id: push_cube_expert
   repo_type: dataset
-  root: /data/wzh/robot/mujoco-studio-lab/data/push_cube_demos
+  root: ${STUDIO_LAB_ROOT}/data/push_cube_demos
   episodes: null
   exclude_episodes: null
   eval_split: 0.2

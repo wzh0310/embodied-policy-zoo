@@ -21,7 +21,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ZOO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-STUDIO_LAB="${STUDIO_LAB_ROOT:-/data/wzh/robot/mujoco-studio-lab}"
+_HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+STUDIO_LAB="${STUDIO_LAB_ROOT:-$(dirname "$_HERE")/mujoco-studio-lab}"
 
 # LeRobot conda 环境
 source "$(conda info --base)/etc/profile.d/conda.sh"
@@ -36,7 +37,7 @@ export STUDIO_LAB_ROOT="${STUDIO_LAB}"
 STEPS="${STEPS:-100}"
 BATCH="${BATCH:-8}"
 CONFIG="${CONFIG:-${STUDIO_LAB}/configs/act_push_cube.yaml}"
-OUTPUT_DIR="${OUTPUT_DIR:-/data/wzh/robot/outputs/act_push_cube_smoke}"
+OUTPUT_DIR="${OUTPUT_DIR:-$(dirname "$_HERE")/outputs/act_push_cube_smoke}"
 TRAINER="${STUDIO_LAB}/scripts/train_act_push_cube.py"
 
 # lerobot 要求 output_dir 不存在（resume=false），先清理

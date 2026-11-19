@@ -20,7 +20,7 @@ import numpy as np
 import torch
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 for p in (REPO, STUDIO_LAB, os.path.join(STUDIO_LAB, "envs")):
     if p not in sys.path:
         sys.path.insert(0, p)
@@ -33,9 +33,10 @@ from push_cube_env import PushCubeEnv, TARGET_XY  # noqa: E402
 
 from eval_bc_comparison import FIXED_SEEDS, load_policy_from_checkpoint, run_episode  # noqa: E402
 
+OUT_ROOT = os.environ.get("OUTPUTS_DIR", os.path.join(os.path.dirname(REPO), "outputs"))
 MODELS = {
-    "act": "/data/wzh/robot/outputs/act_chunk40/checkpoints",
-    "bc": "/data/wzh/robot/outputs/bc_baseline/checkpoints",
+    "act": os.path.join(OUT_ROOT, "act_chunk40", "checkpoints"),
+    "bc": os.path.join(OUT_ROOT, "bc_baseline", "checkpoints"),
 }
 STEPS = [1000, 2000, 3000, 4000]
 

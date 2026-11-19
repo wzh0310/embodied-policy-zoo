@@ -19,8 +19,8 @@
  用法（lerobot 环境）
 --------------------
     python scripts/eval_action_mse.py \
-        --checkpoint act=/data/wzh/robot/outputs/act_chunk40/checkpoints/004000 \
-        --checkpoint bc=/data/wzh/robot/outputs/bc_baseline/checkpoints/004000 \
+        --checkpoint act=/path/to/outputs/act_chunk40/checkpoints/004000 \
+        --checkpoint bc=/path/to/outputs/bc_baseline/checkpoints/004000 \
         --out results/metrics/ACTION_MSE.json
 """
 import argparse
@@ -33,7 +33,7 @@ import numpy as np
 import torch
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 DATA_ROOT = os.path.join(STUDIO_LAB, "data", "push_cube_demos_merged")
 for p in (REPO, STUDIO_LAB, os.path.join(STUDIO_LAB, "envs")):
     if p not in sys.path:

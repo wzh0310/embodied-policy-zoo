@@ -14,12 +14,12 @@
 --checkpoint  checkpoint 目录。
 --seeds       候选种子列表（与评估一致）。
 --max-steps   单回合最大步数。
---out         输出 MP4 路径（默认本仓 results/videos/dual_view.mp4）。
+--out         输出 MP4 路径（默认本仓 assets/videos/dual_view.mp4）。
 
 用法（在 lerobot conda 环境）
 ---------------------------
     python scripts/record_video.py \
-        --checkpoint /data/wzh/robot/outputs/act_push_cube_full/checkpoints/004000
+        --checkpoint /path/to/outputs/act_push_cube_full/checkpoints/004000
 """
 import argparse
 import os
@@ -31,7 +31,7 @@ import torch
 
 # ---- 跨仓路径解析 ----
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 if not os.path.isdir(STUDIO_LAB):
     raise SystemExit(
         f"[record] 找不到兄弟仓库 mujoco-studio-lab: {STUDIO_LAB}\n"

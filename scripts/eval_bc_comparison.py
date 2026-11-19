@@ -20,8 +20,8 @@ BC 基线是 ACT 关闭 CVAE/分块后的配置 (policy.type 仍为 act), 故共
 用法（lerobot conda 环境）
 -------------------------
     python scripts/eval_bc_comparison.py \
-        --checkpoint act=/data/wzh/robot/outputs/act_chunk40/checkpoints/004000 \
-        --checkpoint bc=/data/wzh/robot/outputs/bc_baseline/checkpoints/004000 \
+        --checkpoint act=/path/to/outputs/act_chunk40/checkpoints/004000 \
+        --checkpoint bc=/path/to/outputs/bc_baseline/checkpoints/004000 \
         --out results/metrics/BC_VS_ACT_COMPARISON.json
 """
 import argparse
@@ -34,7 +34,7 @@ import numpy as np
 import torch
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 if not os.path.isdir(STUDIO_LAB):
     raise SystemExit(f"[eval] 找不到兄弟仓库 mujoco-studio-lab: {STUDIO_LAB}")
 for p in (REPO, STUDIO_LAB, os.path.join(STUDIO_LAB, "envs")):

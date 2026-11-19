@@ -22,7 +22,7 @@ import numpy as np
 import torch
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", "/data/wzh/robot/mujoco-studio-lab")
+STUDIO_LAB = os.environ.get("STUDIO_LAB_ROOT", os.path.join(os.path.dirname(REPO), "mujoco-studio-lab"))
 for p in (REPO, STUDIO_LAB, os.path.join(STUDIO_LAB, "envs")):
     if p not in sys.path:
         sys.path.insert(0, p)
