@@ -213,7 +213,7 @@ python scripts/plot_training_curve.py \
 
 ## 7. 后续规划
 
-第 4 周将在同一数据集与评估协议下补充对比实验，形成策略谱系：
+后续将在同一数据集与评估协议下补充对比实验，形成策略谱系：
 
 - **BC（Behavior Cloning）基线**：无动作分块的逐步 MLP 策略，量化"分块"带来的收益。
 - **Diffusion Policy**：基于扩散模型的动作生成策略，对比其在多峰动作分布建模上相对 ACT（CVAE）的优劣。
@@ -253,7 +253,7 @@ embodied-policy-zoo/
 ├── docs/                      # 深度技术文档
 │   ├── ACT_IMPLEMENTATION_GUIDE.md
 │   ├── ACT_TRAINING_NOTES.md
-│   ├── DAY34_REPORT.md
+│   ├── TRAINING_EVAL_REPORT.md
 │   ├── FAILURE_ANALYSIS_REPORT.md
 │   └── TUNING_REPORT.md
 └── README.md
@@ -263,10 +263,10 @@ embodied-policy-zoo/
 
 - `docs/ACT_IMPLEMENTATION_GUIDE.md` —— 数据集制作规范 / 环境接入 / 常见报错 / 超参数速查
 - `docs/ACT_TRAINING_NOTES.md` —— 字段映射与踩坑记录
-- `docs/DAY34_REPORT.md` —— 全量训练与评估体系搭建
+- `docs/TRAINING_EVAL_REPORT.md` —— 全量训练与评估体系搭建
 - `docs/FAILURE_ANALYSIS_REPORT.md` —— 失败案例分析与优化方向
 - `docs/TUNING_REPORT.md` —— 完整调优实验报告（含全部消融数据）
 
 ---
 
-**版本**：`v0.1.0-act-baseline`（第 3 周里程碑 —— 第一个完整可复现的 ACT 基线项目）。
+**版本**：`v0.1.0-act-baseline`（第一个完整可复现的 ACT 基线项目）。

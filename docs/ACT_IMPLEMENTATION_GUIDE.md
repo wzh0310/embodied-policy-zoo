@@ -1,6 +1,6 @@
 # ACT 模仿学习适配指南（push_cube 场景）
 
-> 面向 **LeRobot 0.7.0（2026 定制版）**。本指南把第一周 `mujoco-studio-lab` 的
+> 面向 **LeRobot 0.7.0（2026 定制版）**。本指南把 `mujoco-studio-lab` 的
 > Panda 推方块仿真，完整接入 ACT（Action Chunking with Transformers）策略训练与闭环评估。
 > 所有命令均在 **13 服务器容器** 内执行；仿真/离屏渲染用 `mujoco` 环境，
 > 数据集/环境/训练用 `lerobot` 环境。所有字段以容器内真实源码为准。

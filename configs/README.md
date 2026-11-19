@@ -6,7 +6,7 @@
 |---|---|
 | `act_full_train.yaml` | **全量正式训练**（GPU / 4000 步 / batch16 / 8:2 split / 每 5 epoch 存 checkpoint）。基线 30% 即由此配置产出。 |
 | `act_push_cube.yaml` | 冒烟训练（小步数，验证全链路） |
-| `act_baseline.yaml` | 10 epoch 基线（第二周里程碑） |
+| `act_baseline.yaml` | 10 epoch 基线 |
 | `final_best_train.yaml` | 图像增强实验配置（完整 4000 步，成功率 13.3%，证明增强有害） |
 
 ## act_push_cube/ablations/ —— 消融实验配置
