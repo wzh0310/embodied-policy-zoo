@@ -14,6 +14,8 @@
 - [4. 快速上手](#4-快速上手)
 - [5. 实验结果](#5-实验结果)
 - [5.5 BC 基线公平对比](#55-bc-基线公平对比)
+- [5.6 标准化评估与量化结果](#56-标准化评估与量化结果)
+- [5.7 数据量消融](#57-数据量消融)
 - [6. 演示视频](#6-演示视频)
 - [7. 后续规划](#7-后续规划)
 
@@ -211,12 +213,45 @@ ACT 逐种子净胜 4 回合（独赢 13 vs BC 独赢 9）。最大差异在位�
 [`docs/BC_BASELINE_REPORT.md`](docs/BC_BASELINE_REPORT.md)，指标 JSON 见
 [`results/metrics/BC_VS_ACT_COMPARISON.json`](results/metrics/BC_VS_ACT_COMPARISON.json)。
 
+### 5.6 标准化评估与量化结果
+
+统一协议（50 固定种子、同测试集）下的四指标对比表，可直接用于文档/简历：
+
+| 算法 | 任务成功率 | 平均完成步数 | 最终位置误差 (cm) | 验证集动作 MSE |
+| --- | --- | --- | --- | --- |
+| BC | 42.0% (21/50) | 34.33 | 12.25 | 3.24e-06 |
+| ACT (chunk40) | 50.0% (25/50) | 35.12 | 5.55 | 3.71e-06 |
+
+反直觉发现：BC 的单帧动作 MSE 反而略低于 ACT（3.24e-06 vs 3.71e-06），说明 ACT 的优势
+不在单帧拟合精度，而在分块规划带来的轨迹连贯性。
+
+![loss 对比](results/metrics/LOSS_CURVE_COMPARISON.png)
+
+![成功率曲线](results/metrics/SUCCESS_CURVE.png)
+
+详见 [`docs/STANDARD_EVAL_REPORT.md`](docs/STANDARD_EVAL_REPORT.md)。
+
+### 5.7 数据量消融
+
+固定最优 ACT 配置，仅改变演示数量（20 / 40 / 63），成功率单调上升：
+
+| 演示数量 | 20 | 40 | 63（全量） |
+| --- | --- | --- | --- |
+| 成功率 | 24.0% | 34.0% | 50.0% |
+
+![数据量曲线](results/metrics/DATA_ABLATION_CURVE.png)
+
+注：合并数据集仅 63 条成功演示（v2=40 + v3b 成功=23），100 条不可达。本实验未支持
+"数据越少 ACT 优势越大"的假设——ACT 与 BC 均随数据量增加而提升。详见
+[`docs/DATA_ABLATION_REPORT.md`](docs/DATA_ABLATION_REPORT.md)。
+
 ---
 
 ## 6. 演示视频
 
 | 视频 | 内容 | 路径 |
 |---|---|---|
+| 演示短视频 | 4 个成功回合合成，13.8 秒双视角（第三人称+第一人称） | [`results/videos/demo_short.mp4`](results/videos/demo_short.mp4) |
 | 双视角演示 | 左 global_cam 第三人称 + 右 top_cam 第一人称，成功回合逐帧推理 | [`results/videos/dual_view.mp4`](results/videos/dual_view.mp4) |
 | 成功回合 | 策略单视角成功 rollout | [`results/videos/success_rollout.mp4`](results/videos/success_rollout.mp4) |
 | 专家演示 | 采集的专家推动轨迹 | [`results/videos/expert_demo.mp4`](results/videos/expert_demo.mp4) |
@@ -236,6 +271,9 @@ ACT 逐种子净胜 4 回合（独赢 13 vs BC 独赢 9）。最大差异在位�
 
 - **BC（Behavior Cloning）基线**（已完成）：关闭 CVAE 与动作分块的逐步回归策略，
   在同一 50 种子下 ACT 50% vs BC 42%，位置误差 ACT 降低 55%，量化了分块+CVAE 的收益。
+- **标准化评估与量化对比**（已完成）：统一 50 种子协议产出四指标对比表 + 训练/成功率曲线。
+- **数据量消融**（已完成）：20/40/63 条演示成功率 24%→34%→50%；100 条因数据不足不可达。
+- **演示视频**（已完成）：4 个成功回合合成的 13.8 秒双视角短视频。
 - **Diffusion Policy**：基于扩散模型的动作生成策略，对比其在多峰动作分布建模上相对 ACT（CVAE）的优劣。
 - **统一评估协议**：所有策略使用本仓库固定的 3 种子 × 10 回合评估，确保横向对比公平。
 - **瓶颈突破方向**：针对失败分析定位的方向控制问题，探索更大数据集、闭环高频重规划、以及改进的动作表征。
@@ -288,7 +326,10 @@ embodied-policy-zoo/
 - `docs/FAILURE_ANALYSIS_REPORT.md` —— 失败案例分析与优化方向
 - `docs/TUNING_REPORT.md` —— 完整调优实验报告（含全部消融数据）
 - `docs/BC_BASELINE_REPORT.md` —— BC 基线公平对比（ACT 算法净增益量化）
+- `docs/STANDARD_EVAL_REPORT.md` —— 标准化评估与量化对比表
+- `docs/DATA_ABLATION_REPORT.md` —— 数据量消融实验
+- `docs/DEMO_VIDEO_REPORT.md` —— 演示视频说明
 
 ---
 
-**版本**：`v0.1.0-act-baseline`（第一个完整可复现的 ACT 基线项目）。
+**版本**：`v0.5.0-standard-eval`（标准化评估 + 量化对比 + 数据量消融 + 演示视频）。

@@ -1,0 +1,30 @@
+{
+  "protocol": {
+    "rollouts_per_model": 50,
+    "fixed_seeds": 50,
+    "validation_mse_frames": 488,
+    "note": "成功率/步数/位置误差来自 50 固定种子 rollout；动作 MSE 来自 13 条 held-out episode 的 teacher-forcing（raw 动作空间）。"
+  },
+  "models": {
+    "act": {
+      "algorithm": "ACT (chunk40)",
+      "success_rate": 0.5,
+      "n_success": 25,
+      "n_rollouts": 50,
+      "avg_completion_steps": 35.12,
+      "final_position_error_cm": 5.550419701292381,
+      "val_action_mse": 3.706438974404591e-06,
+      "val_action_rmse_translation_cm": 0.22230426519838647
+    },
+    "bc": {
+      "algorithm": "BC",
+      "success_rate": 0.42,
+      "n_success": 21,
+      "n_rollouts": 50,
+      "avg_completion_steps": 34.333333333333336,
+      "final_position_error_cm": 12.25177904916754,
+      "val_action_mse": 3.2415832720289472e-06,
+      "val_action_rmse_translation_cm": 0.20789686688853753
+    }
+  }
+}

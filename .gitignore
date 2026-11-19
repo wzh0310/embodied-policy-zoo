@@ -6,3 +6,6 @@ checkpoints/
 outputs/
 wandb/
 data/raw/
+
+# 演示视频中间片段（成片见 demo_short.mp4）
+results/videos/.clips/

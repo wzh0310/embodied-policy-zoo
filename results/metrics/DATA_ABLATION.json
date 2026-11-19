@@ -1,0 +1,36 @@
+{
+  "protocol": {
+    "n_seeds": 50,
+    "max_steps": 50,
+    "note": "\u540c\u4e00 50 \u56fa\u5b9a\u79cd\u5b50\uff1b63 \u6863\u590d\u7528\u6700\u4f18 ACT checkpoint"
+  },
+  "models": {
+    "20": {
+      "n_demos": 20,
+      "checkpoint": "/data/wzh/robot/outputs/act_data20/checkpoints/004000",
+      "success_rate": 0.24,
+      "n_success": 12,
+      "n_rollouts": 50,
+      "avg_distance_error": 0.20906539809565106,
+      "avg_completion_steps": 35.666666666666664
+    },
+    "40": {
+      "n_demos": 40,
+      "checkpoint": "/data/wzh/robot/outputs/act_data40/checkpoints/004000",
+      "success_rate": 0.34,
+      "n_success": 17,
+      "n_rollouts": 50,
+      "avg_distance_error": 0.08756375894981984,
+      "avg_completion_steps": 36.1764705882353
+    },
+    "63": {
+      "n_demos": 63,
+      "checkpoint": "/data/wzh/robot/outputs/act_chunk40/checkpoints/004000",
+      "success_rate": 0.5,
+      "n_success": 25,
+      "n_rollouts": 50,
+      "avg_distance_error": 0.05550419701292381,
+      "avg_completion_steps": 35.12
+    }
+  }
+}

@@ -8,3 +8,5 @@
 | `keyframe_scene.png` / `keyframe_goal.png` | 场景概览 / 目标达成关键帧 |
 
 视频由 `scripts/record_video.py` 录制（fps=50，双视角帧 224×448×3）。
+
+| `demo_short.mp4` | 4 个成功回合合成的 13.8 秒双视角演示短视频（本次产出） |

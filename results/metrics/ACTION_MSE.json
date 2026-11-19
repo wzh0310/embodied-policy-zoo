@@ -1,0 +1,64 @@
+{
+  "metric": "validation action MSE (teacher-forcing, raw action space)",
+  "eval_split": 0.2,
+  "models": {
+    "act": {
+      "checkpoint": "/data/wzh/robot/outputs/act_chunk40/checkpoints/004000",
+      "n_frames": 488,
+      "eval_episodes": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "action_mse_raw_all": 3.706438974404591e-06,
+      "action_mse_translation_m2": 4.941918632539455e-06,
+      "action_mse_translation_cm2": 0.04941918632539455,
+      "action_rmse_translation_cm": 0.22230426519838647,
+      "per_dim_mse": [
+        1.0492487490409985e-05,
+        4.195423571218271e-06,
+        1.3784035957087326e-07,
+        0.0
+      ]
+    },
+    "bc": {
+      "checkpoint": "/data/wzh/robot/outputs/bc_baseline/checkpoints/004000",
+      "n_frames": 488,
+      "eval_episodes": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "action_mse_raw_all": 3.2415832720289472e-06,
+      "action_mse_translation_m2": 4.322110726207029e-06,
+      "action_mse_translation_cm2": 0.04322110726207029,
+      "action_rmse_translation_cm": 0.20789686688853753,
+      "per_dim_mse": [
+        9.681300070951693e-06,
+        3.2221678338828497e-06,
+        6.286369824692883e-08,
+        0.0
+      ]
+    }
+  }
+}
