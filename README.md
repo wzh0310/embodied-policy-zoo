@@ -13,6 +13,7 @@
 - [3. 环境依赖](#3-环境依赖)
 - [4. 快速上手](#4-快速上手)
 - [5. 实验结果](#5-实验结果)
+- [5.5 BC 基线公平对比](#55-bc-基线公平对比)
 - [6. 演示视频](#6-演示视频)
 - [7. 后续规划](#7-后续规划)
 
@@ -192,6 +193,24 @@ python scripts/plot_training_curve.py \
 
 **诚实结论**：经 14 组消融 + 3 组针对性实验，成功率未能突破基线 30%。这是当前数据规模（40 条演示）+ resnet18 容量下的真实能力上限；达到 70% 需要质变（数据量级提升、改进动作表征/闭环控制、更强策略）。本基线作为后续所有优化实验的**可复现对比基准**。
 
+### 5.5 BC 基线公平对比
+
+用与最优 ACT **完全相同的数据、输入/输出、训练节奏与评估协议**训练行为克隆基线，
+量化 ACT（CVAE + 动作分块）的算法净增益。BC 为 LeRobot 原生实现：ACT 关闭 CVAE
+（`use_vae:false`）与动作分块（`chunk_size=1`）后的逐帧回归策略，共享同一 ImageNet
+ResNet-18 编码器。两者在同一进程、同一批 50 个固定种子下评估。
+
+| 指标（50 固定种子，双模型同测试集） | ACT（chunk40） | BC 基线 | 差异 |
+|---|---|---|---|
+| **成功率** | **50.0%**（25/50） | 42.0%（21/50） | ACT +8.0 pp |
+| 平均完成步数 | 35.12 | 34.33 | 接近 |
+| **平均位置误差** | **0.0555 m** | 0.1225 m | ACT 降低 55% |
+
+ACT 逐种子净胜 4 回合（独赢 13 vs BC 独赢 9）。最大差异在位置误差：BC 逐帧重规划
+累积方向抖动，整回合误差约为 ACT 的 2.2 倍；成功回合两者步数/误差接近。详见
+[`docs/BC_BASELINE_REPORT.md`](docs/BC_BASELINE_REPORT.md)，指标 JSON 见
+[`results/metrics/BC_VS_ACT_COMPARISON.json`](results/metrics/BC_VS_ACT_COMPARISON.json)。
+
 ---
 
 ## 6. 演示视频
@@ -215,7 +234,8 @@ python scripts/plot_training_curve.py \
 
 后续将在同一数据集与评估协议下补充对比实验，形成策略谱系：
 
-- **BC（Behavior Cloning）基线**：无动作分块的逐步 MLP 策略，量化"分块"带来的收益。
+- **BC（Behavior Cloning）基线**（已完成）：关闭 CVAE 与动作分块的逐步回归策略，
+  在同一 50 种子下 ACT 50% vs BC 42%，位置误差 ACT 降低 55%，量化了分块+CVAE 的收益。
 - **Diffusion Policy**：基于扩散模型的动作生成策略，对比其在多峰动作分布建模上相对 ACT（CVAE）的优劣。
 - **统一评估协议**：所有策略使用本仓库固定的 3 种子 × 10 回合评估，确保横向对比公平。
 - **瓶颈突破方向**：针对失败分析定位的方向控制问题，探索更大数据集、闭环高频重规划、以及改进的动作表征。
@@ -240,6 +260,7 @@ embodied-policy-zoo/
 ├── scripts/
 │   ├── train.py               # 训练启动（统一入口）
 │   ├── eval.py                # 自动化评估（统一入口）
+│   └── eval_bc_comparison.py  # BC vs ACT 对齐评估（50 固定种子）
 │   ├── record_video.py        # 演示录制（统一入口）
 │   ├── plot_training_curve.py # 训练曲线生成
 │   ├── ablation_pipeline.py   # 消融实验编排
@@ -266,6 +287,7 @@ embodied-policy-zoo/
 - `docs/TRAINING_EVAL_REPORT.md` —— 全量训练与评估体系搭建
 - `docs/FAILURE_ANALYSIS_REPORT.md` —— 失败案例分析与优化方向
 - `docs/TUNING_REPORT.md` —— 完整调优实验报告（含全部消融数据）
+- `docs/BC_BASELINE_REPORT.md` —— BC 基线公平对比（ACT 算法净增益量化）
 
 ---
 

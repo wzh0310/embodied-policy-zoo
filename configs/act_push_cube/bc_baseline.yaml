@@ -1,0 +1,107 @@
+# BC 基线 —— 与最优 ACT 完全对齐的行为克隆对照
+#
+# 设计原则（公平对比）:
+#   本 LeRobot 0.7.0 定制版无独立 `bc` policy。行为克隆的标准 LeRobot 原生实现
+#   即 ACT 去掉两处算法增量: (1) use_vae=false 关闭 CVAE 变分目标;
+#   (2) chunk_size=1 / n_action_steps=1 关闭动作分块。
+#   这样得到"逐帧单步动作回归"的纯 BC, 同时保留与 ACT 完全相同的:
+#     - ImageNet 预训练 ResNet-18 图像编码器 + 同一 transformer 解码头
+#     - 观测空间 (observation.state + observation.images.main) 与动作空间
+#     - 数据集 (63 条合并演示) / 归一化 / 图像预处理 (增强关闭)
+#     - 训练步数 4000 / batch 32 / lr 1e-5 / 余弦退火 / seed 1000
+#   唯一变量是"算法"本身, 故成功率差异可归因于 ACT 的 CVAE + 动作分块。
+#
+# 预期: BC 逐帧重规划会累积方向抖动 (对比 ACT 大 chunk 一次规划整段轨迹),
+# 该基线用于量化 ACT 算法的净增益, 而非追求 BC 本身的高分。
+
+output_dir: /data/wzh/robot/outputs/bc_baseline
+job_name: bc_baseline
+seed: 1000
+resume: false
+
+# ----------------------------- 训练节奏（与 ACT 完全一致） ------------------
+steps: 4000
+batch_size: 32
+num_workers: 4
+prefetch_factor: 4
+persistent_workers: true
+log_freq: 20
+save_freq: 1000
+save_checkpoint: true
+eval_steps: 200
+max_eval_samples: 0
+env_eval_freq: 1000000000
+tf32: true
+cudnn_deterministic: false
+
+# ----------------------------- 余弦退火调度（一致） --------------------------
+scheduler:
+  type: cosine_annealing_with_warmup
+  num_warmup_steps: 100
+
+# ----------------------------- 数据集（一致） -------------------------------
+dataset:
+  repo_id: push_cube_expert
+  repo_type: dataset
+  root: /data/wzh/robot/mujoco-studio-lab/data/push_cube_demos_merged
+  episodes: null
+  exclude_episodes: null
+  eval_split: 0.2
+  use_imagenet_stats: true
+  video_backend: pyav
+  revision: null
+  streaming: false
+  image_transforms:
+    enable: false
+    backend: dataloader
+    max_num_transforms: 3
+    random_order: false
+
+# ----------------------------- 策略: 纯 BC ----------------------------------
+policy:
+  type: act                    # LeRobot 原生 BC = ACT 关闭 CVAE 与分块
+  device: cuda
+  push_to_hub: false
+  repo_id: local/bc_baseline
+
+  n_obs_steps: 1
+  chunk_size: 1                # BC: 单步动作回归 (ACT 为 40)
+  n_action_steps: 1            # BC: 每步重规划 (ACT 为 40)
+
+  vision_backbone: resnet18
+  dim_model: 128
+  n_heads: 8
+  dim_feedforward: 512
+  n_encoder_layers: 1
+  n_decoder_layers: 1
+  dropout: 0.1
+
+  use_vae: false               # BC: 关闭 CVAE 变分目标 (ACT 为 true)
+  latent_dim: 8                # use_vae=false 时不参与, 保留仅兼容配置结构
+  n_vae_encoder_layers: 1
+  kl_weight: 1.0
+
+  optimizer_lr: 1e-5
+  optimizer_lr_backbone: 1e-5
+  optimizer_weight_decay: 1e-4
+  use_amp: false
+
+accelerator:
+  mixed_precision: "no"
+
+env:
+  type: push_cube
+  task: push_cube
+  fps: 50
+  episode_length: 50
+
+eval:
+  n_episodes: 1
+  batch_size: 1
+  use_async_envs: false
+  recording: false
+  max_episode_steps: 50
+
+trackio:
+  enable: false
+  project: lerobot
