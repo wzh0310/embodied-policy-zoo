@@ -1,0 +1,56 @@
+{
+  "status": "fixed",
+  "summary": "GPU 可用性错误判断纠正：容器具备 RTX A6000，mujoco 环境 torch cu132 与驱动 12.4 不匹配导致 CUDA 不可用；修复为 cu124 后视觉 PPO GPU 训练 209fps",
+  "gpu": {
+    "name": "NVIDIA RTX A6000",
+    "memory_mib": 49140,
+    "driver": "550.107.02",
+    "cuda_version": "12.4",
+    "device_nodes": [
+      "/dev/nvidia0",
+      "/dev/nvidiactl",
+      "/dev/nvidia-uvm"
+    ]
+  },
+  "torch_before": {
+    "version": "2.15.0+cu132",
+    "cuda_available": false
+  },
+  "torch_after": {
+    "version": "2.6.0+cu124",
+    "torchvision": "0.21.0+cu124",
+    "cuda_available": true
+  },
+  "cnn_benchmark": {
+    "cpu_ms_per_update": 590.28,
+    "gpu_ms_per_update": 2.31,
+    "cpu_upd_per_s": 1.7,
+    "gpu_upd_per_s": 432.1,
+    "speedup_x": 250.0
+  },
+  "vision_ppo_10k": {
+    "cpu": {
+      "total_timesteps": 10240,
+      "time_elapsed_s": 1667,
+      "fps": 6
+    },
+    "gpu": {
+      "total_timesteps": 10240,
+      "time_elapsed_s": 48,
+      "fps": 209,
+      "loss_first": -0.0453,
+      "loss_last": -0.0449,
+      "value_loss_first": 0.166,
+      "value_loss_last": 0.124,
+      "explained_variance_peak": 0.666,
+      "model_saved": true
+    },
+    "speedup_x": 34.7,
+    "projected_2m_hours": 2.66
+  },
+  "mujoco_rendering": {
+    "current_backend": "mesa llvmpipe",
+    "nvidia_egl_installed": true,
+    "note": "渲染非训练瓶颈：train 档几何代理 ~482fps；GPU 渲染切换未成功但不影响训练吞吐"
+  }
+}

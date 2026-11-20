@@ -8,8 +8,8 @@
 ## 1. 离屏渲染：两档预设 + 几何代理加速
 
 ### 1.1 为什么需要几何代理
-容器虽装配 RTX A6000，但**未直通 `/dev/dri` GPU 设备、也无 NVIDIA EGL 库**，MuJoCo 只能
-走 mesa 软件光栅化。实测完整 Panda 场景（90 geom / 67 mesh）单帧 140ms ≈ **7fps**，与
+容器装配 RTX A6000（`/dev/nvidia*` 设备已直通，详见 `docs/GPU_ACCELERATION_FIX.md`），
+但 MuJoCo 离屏渲染当前仍走 mesa 软件光栅化（已装 NVIDIA EGL 库，切换 GPU 渲染未成功）。实测完整 Panda 场景（90 geom / 67 mesh）单帧 140ms ≈ **7fps**，与
 分辨率无关（84 与 224 耗时相同），瓶颈在 Panda 高面数 mesh 的固定光栅化开销，关阴影也
 仅 11fps。因此 200fps 目标在完整场景的纯软件渲染下不可达。
 
@@ -59,8 +59,9 @@
   问题特定于 SB3 构造路径。
 - **EGL + fork 死锁**：父进程先渲染再 `SubprocVecEnv` fork 会继承 GL 上下文而死锁；视觉
   训练默认单环境，规避该问题（历史记录见 `docs/SB3_SETUP_REPORT.md`）。
-- **CUDA 驱动告警**：torch 2.15+cu132 遇旧驱动（12040）在反向时打印告警，headless CPU
-  训练不受影响（state/视觉 PPO 均 CPU 运行）。
+- **CUDA 驱动告警（已修复）**：此前 torch 2.15+cu132 遇驱动 12.4 不匹配；现已将
+  `mujoco` 环境 torch 修为 2.6.0+cu124，CUDA 可用，视觉 PPO 可用 `device=cuda` 训练
+  达 209 fps（详见 `docs/GPU_ACCELERATION_FIX.md`）。
 
 ## 4. 目录结构与解耦
 

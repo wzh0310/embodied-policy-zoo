@@ -22,3 +22,4 @@
 | `VISION_PIPELINE_VERIFY.json` | 视觉管线 9 项验证全 PASS（观测兼容/两档渲染/缓存失效/随机种子/动作归一化/check_env/训练档 481.8fps） |
 | `CNN_PPO_VISION_SMOKE.json` | SB3 CnnPolicy + rgb 观测闭环与 state PPO 无回归冒烟结果 |
 | `VISION_PPO_10K_SMOKE.json` | 端到端视觉 PPO 1 万步验证（CnnPolicy+NatureCNN+4 帧堆叠，观测 (4,84,84)，损失正常、模型已保存） |
+| `GPU_ACCELERATION_FIX.json` | GPU 可用性纠正与性能修复（torch cu132→cu124，视觉 PPO CPU 6fps→GPU 209fps，35 倍提速） |

@@ -335,6 +335,7 @@ embodied-policy-zoo/
 | `docs/PROJECT_RETROSPECTIVE.md` | 项目复盘与后续铺垫 |
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
 | `docs/VISION_PPO_TRAINING.md` | 端到端视觉 PPO（CnnPolicy+NatureCNN+4 帧堆叠，200 万步配置，1 万步验证） |
+| `docs/GPU_ACCELERATION_FIX.md` | GPU 可用性纠正与视觉 PPO 性能修复（torch cu132→cu124，CPU 6fps→GPU 209fps，35 倍提速） |
 | `docs/VISION_PIPELINE_REPORT.md` | 视觉观测管线（两档离屏渲染/几何代理 482fps/三类问题修复/目录解耦） |
 | `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |
 | `docs/STATE_PPO_TRAINING.md` | 状态 PPO 训练/评估脚本 + 学习信号快速验证 |
