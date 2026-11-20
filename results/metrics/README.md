@@ -21,3 +21,4 @@
 | `PPO_BASELINE_PROGRESS.csv` / `PPO_TUNED_PROGRESS.csv` | PPO 原始训练日志 |
 | `VISION_PIPELINE_VERIFY.json` | 视觉管线 9 项验证全 PASS（观测兼容/两档渲染/缓存失效/随机种子/动作归一化/check_env/训练档 481.8fps） |
 | `CNN_PPO_VISION_SMOKE.json` | SB3 CnnPolicy + rgb 观测闭环与 state PPO 无回归冒烟结果 |
+| `VISION_PPO_10K_SMOKE.json` | 端到端视觉 PPO 1 万步验证（CnnPolicy+NatureCNN+4 帧堆叠，观测 (4,84,84)，损失正常、模型已保存） |

@@ -270,6 +270,10 @@ BC@4000=42% 与主评估交叉验证一致。
   脚本 `algos/ppo/train_rgb_ppo.py` 与验证脚本 `scripts/verify_vision_pipeline.py`（9 项全
   PASS）。详见 `docs/VISION_PIPELINE_REPORT.md`。
 
+- **端到端视觉 PPO**：`algos/ppo/train_vision_ppo.py`（CnnPolicy + NatureCNN + 4 帧堆叠，
+  84×84 灰度输入，默认 200 万步 / lr 2e-4）。1 万步小批量验证通过，损失正常、模型可保存
+  （`docs/VISION_PPO_TRAINING.md`，数据 `results/metrics/VISION_PPO_10K_SMOKE.json`）。
+
 ---
 
 ## 8. 后续规划
@@ -293,7 +297,7 @@ BC@4000=42% 与主评估交叉验证一致。
 ```
 embodied-policy-zoo/
 ├── algos/                        # 算法实现（ppo/ 状态 + 视觉，后续 dt/iql）
-│   └── ppo/                      # train_state_ppo / train_rgb_ppo / guided_reward
+│   └── ppo/                      # train_state_ppo / train_rgb_ppo / train_vision_ppo / guided_reward
 ├── configs/                      # 训练配置（占位符路径，可直接复现）
 │   ├── act_push_cube/            # 主配置 + ablation/ + ablations/ 分组
 │   └── README.md
@@ -330,6 +334,7 @@ embodied-policy-zoo/
 | `docs/DEMO_VIDEO_REPORT.md` | 演示视频说明 |
 | `docs/PROJECT_RETROSPECTIVE.md` | 项目复盘与后续铺垫 |
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
+| `docs/VISION_PPO_TRAINING.md` | 端到端视觉 PPO（CnnPolicy+NatureCNN+4 帧堆叠，200 万步配置，1 万步验证） |
 | `docs/VISION_PIPELINE_REPORT.md` | 视觉观测管线（两档离屏渲染/几何代理 482fps/三类问题修复/目录解耦） |
 | `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |
 | `docs/STATE_PPO_TRAINING.md` | 状态 PPO 训练/评估脚本 + 学习信号快速验证 |

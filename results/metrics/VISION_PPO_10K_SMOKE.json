@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "total_timesteps": 10240,
+  "iterations": 5,
+  "elapsed_sec": 1667,
+  "fps": 6.0,
+  "stacked_obs_shape": [
+    4,
+    84,
+    84
+  ],
+  "frame_stack": 4,
+  "features_extractor": "NatureCNN",
+  "learning_rate": 0.0002,
+  "loss_first": -0.026730269193649292,
+  "loss_last": -0.05791731923818588,
+  "value_loss_last": 0.052400290966033936,
+  "policy_gradient_loss_last": -0.01241855402768124,
+  "n_updates": 40,
+  "model_saved": true,
+  "no_errors": true
+}
