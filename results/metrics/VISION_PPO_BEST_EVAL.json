@@ -1,0 +1,12 @@
+{
+  "model": "/data/wzh/robot/outputs/ppo_vision/full_2m/checkpoints/vision_ppo_1800000_steps.zip",
+  "episodes": 300,
+  "deterministic": false,
+  "frame_stack": 4,
+  "success_rate": 0.4367,
+  "n_success": 131,
+  "mean_episode_reward": 3.6807,
+  "std_episode_reward": 6.1057,
+  "mean_episode_steps": 40.65,
+  "mean_final_cube_dist": 0.2
+}

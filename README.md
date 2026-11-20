@@ -276,6 +276,18 @@ BC@4000=42% 与主评估交叉验证一致。
 
 ---
 
+## 7.5 端到端视觉 PPO 全量训练
+
+- **200 万步全量训练**（GPU，约 2.7 小时）：CnnPolicy + NatureCNN + 4 帧堆叠，
+  84×84 灰度输入，每 10 万步存一次（共 20 个 checkpoint）。训练 rollout 成功率
+  末期均值 33.3%、峰值 45%，曲线单调上升无剧烈震荡（`docs/VISION_PPO_TRAINING_FULL.md`）。
+- **Checkpoint 取优**：全部 checkpoint 逐一评估，最优 **180 万步** checkpoint 随机采样
+  成功率 **43.7%（131/300）**、平均奖励 +3.68；最终模型出现末期退化（5%），印证中途取优的必要性。
+- **调优结论**：引导奖励量级过大导致 value_loss 爆炸（348~468），弃用；原始奖励 +
+  lr1e-4 + 数据增强 + clip0.15 + grad-norm0.3 为稳定配置。70% 目标未达成（实测 43.7%），
+  原因见报告，未虚报。曲线 `results/metrics/VISION_PPO_FULL_CURVE.png`。
+- 新增工具：`utils/evaluate_vision.py`（视觉策略评估）、`algos/ppo/vision_augmentation.py`（图像增强）。
+
 ## 8. 后续规划
 
 在同一数据集与评估协议下继续扩展策略谱系，保证横向可比：
@@ -335,6 +347,7 @@ embodied-policy-zoo/
 | `docs/PROJECT_RETROSPECTIVE.md` | 项目复盘与后续铺垫 |
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
 | `docs/VISION_PPO_TRAINING.md` | 端到端视觉 PPO（CnnPolicy+NatureCNN+4 帧堆叠，200 万步配置，1 万步验证） |
+| `docs/VISION_PPO_TRAINING_FULL.md` | 视觉 PPO 200 万步全量训练与调优（最优 180 万步 43.7%，曲线与 checkpoint 取优） |
 | `docs/GPU_ACCELERATION_FIX.md` | GPU 可用性纠正与视觉 PPO 性能修复（torch cu132→cu124，CPU 6fps→GPU 209fps，35 倍提速） |
 | `docs/VISION_PIPELINE_REPORT.md` | 视觉观测管线（两档离屏渲染/几何代理 482fps/三类问题修复/目录解耦） |
 | `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |

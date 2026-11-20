@@ -72,15 +72,40 @@ def parse_args():
     ap.add_argument("--save-freq", type=int, default=50_000)
     ap.add_argument("--out-dir", type=str, default=None)
     ap.add_argument("--device", type=str, default="cpu")
+    ap.add_argument("--clip-range", type=float, default=0.2,
+                    help="PPO policy clip range (震荡时减小，如 0.1)")
+    ap.add_argument("--max-grad-norm", type=float, default=0.5,
+                    help="gradient clipping norm (震荡时减小)")
+    ap.add_argument("--guided-reward", action="store_true",
+                    help="用 GuidedRewardWrapper 强化稠密引导（收敛慢时开启）")
+    ap.add_argument("--ee-weight", type=float, default=8.0)
+    ap.add_argument("--cube-weight", type=float, default=15.0)
+    ap.add_argument("--augment", action="store_true",
+                    help="启用训练侧图像增强（随机裁剪+颜色抖动，防过拟合）")
+    ap.add_argument("--crop-pad", type=int, default=4)
+    ap.add_argument("--brightness-low", type=float, default=0.85)
+    ap.add_argument("--brightness-high", type=float, default=1.15)
+    ap.add_argument("--noise-std", type=float, default=0.03)
     return ap.parse_args()
 
 
 def make_vec_env(args):
     def _f():
-        return gym.make(GYM_ID, obs_mode="rgb", rgb_preset=args.rgb_preset,
-                        randomize_start=args.randomize_start,
-                        start_xy_range=args.start_xy_range,
-                        disable_env_checker=True)
+        env = gym.make(GYM_ID, obs_mode="rgb", rgb_preset=args.rgb_preset,
+                       randomize_start=args.randomize_start,
+                       start_xy_range=args.start_xy_range,
+                       disable_env_checker=True)
+        if getattr(args, "guided_reward", False):
+            from algos.ppo.guided_reward import GuidedRewardWrapper
+            env = GuidedRewardWrapper(env, ee_weight=args.ee_weight,
+                                      cube_weight=args.cube_weight)
+        if getattr(args, "augment", False):
+            from algos.ppo.vision_augmentation import VisionAugmentationWrapper
+            env = VisionAugmentationWrapper(
+                env, crop_pad=args.crop_pad,
+                brightness=(args.brightness_low, args.brightness_high),
+                noise_std=args.noise_std)
+        return env
     venv = DummyVecEnv([_f])
     # 帧堆叠：CHW 灰度 (1,84,84) x4 -> (4,84,84)，提供运动时序
     venv = VecFrameStack(venv, n_stack=args.frame_stack, channels_order="first")
@@ -103,7 +128,9 @@ def main():
     model = PPO("CnnPolicy", venv, n_steps=args.n_steps,
                 batch_size=args.batch_size, learning_rate=args.learning_rate,
                 ent_coef=args.ent_coef, gamma=args.gamma,
-                gae_lambda=args.gae_lambda, policy_kwargs=CNN_KWARGS,
+                gae_lambda=args.gae_lambda,
+                clip_range=args.clip_range, max_grad_norm=args.max_grad_norm,
+                policy_kwargs=CNN_KWARGS,
                 device=args.device, verbose=1, seed=args.seed,
                 tensorboard_log=str(out_dir / "logs"))
     logger = configure(str(out_dir / "logs"), ["csv", "stdout"])

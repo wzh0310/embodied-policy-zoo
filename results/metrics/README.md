@@ -23,3 +23,6 @@
 | `CNN_PPO_VISION_SMOKE.json` | SB3 CnnPolicy + rgb 观测闭环与 state PPO 无回归冒烟结果 |
 | `VISION_PPO_10K_SMOKE.json` | 端到端视觉 PPO 1 万步验证（CnnPolicy+NatureCNN+4 帧堆叠，观测 (4,84,84)，损失正常、模型已保存） |
 | `GPU_ACCELERATION_FIX.json` | GPU 可用性纠正与性能修复（torch cu132→cu124，视觉 PPO CPU 6fps→GPU 209fps，35 倍提速） |
+| `VISION_PPO_FULL_CURVE.png` | 视觉 PPO 200 万步完整训练曲线（成功率/损失/explained_var/fps） |
+| `VISION_PPO_2M_SUMMARY.json` | 全量训练汇总（调优对比、20 个 checkpoint 评估、最优 180 万步 43.7%） |
+| `VISION_PPO_BEST_EVAL.json` | 最优 checkpoint（180 万步）300 回合复评（成功率 43.7%，奖励 +3.68） |
