@@ -248,6 +248,11 @@ BC@4000=42% 与主评估交叉验证一致。
 
 测试脚本 `scripts/verify_sb3_env.py`，数据见 `results/metrics/RANDOM_POLICY_BASELINE.json`。
 
+- **环境合规**：`gymnasium.utils.env_checker.check_env()` 在 `state`/`both` 两种观测模式下均通过；
+  SB3 `env_checker` 二次验证通过。详见 `docs/ENV_COMPLIANCE_REPORT.md`。
+- **最小闭环**：`PPO("MlpPolicy")` + `state` 观测交互 100 步，动作/观测/奖励格式正确、无报错
+  （`scripts/verify_sb3_ppo_closedloop.py`，数据 `results/metrics/SB3_PPO_SMOKE.json`）。
+
 ---
 
 ## 8. 后续规划
@@ -305,7 +310,8 @@ embodied-policy-zoo/
 | `docs/DEMO_VIDEO_REPORT.md` | 演示视频说明 |
 | `docs/PROJECT_RETROSPECTIVE.md` | 项目复盘与后续铺垫 |
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
+| `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |
 
 ---
 
-**版本**：`v0.0.7-sb3-rl-base`（SB3 依赖与离屏渲染适配 + 4 并行向量化验证 + 随机策略基线）。
+**版本**：`v0.0.8-rl-closed-loop`（环境 API 合规校验 + SB3 二次验证 + PPO 最小交互闭环）。

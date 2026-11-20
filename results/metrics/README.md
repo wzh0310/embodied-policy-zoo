@@ -13,3 +13,4 @@
 | `DATA_ABLATION.json` | 数据量消融（20/40/63）原始指标 |
 | `LOSS_CURVE_COMPARISON.png` / `SUCCESS_CURVE.png` / `DATA_ABLATION_CURVE.png` | 三张对比曲线图 |
 | `RANDOM_POLICY_BASELINE.json` | SB3 环境适配验证 + 随机策略 10 回合基线（平均奖励 -3.15 / 成功率 0% / 4 并行吞吐） |
+| `SB3_PPO_SMOKE.json` | SB3 二次验证 + PPO(MLP) 100 步最小闭环（累计奖励 -6.1341，无报错） |

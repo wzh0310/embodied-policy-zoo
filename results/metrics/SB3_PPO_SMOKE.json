@@ -1,0 +1,9 @@
+{
+  "sb3_env_checker": "pass",
+  "algorithm": "PPO",
+  "policy": "MlpPolicy",
+  "obs_mode": "state",
+  "interaction_steps": 100,
+  "total_reward": -6.1341,
+  "no_errors": true
+}
