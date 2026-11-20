@@ -1,0 +1,5 @@
+{
+  "cnn_ppo_closed_loop": "PASS",
+  "cnn_config": "CnnPolicy + policy_kwargs={normalize_images:False}",
+  "state_ppo_no_regression": "PASS"
+}

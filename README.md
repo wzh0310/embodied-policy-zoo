@@ -106,8 +106,10 @@ Franka Panda 机械臂将桌面上的立方体推入红色目标圆盘区域。�
 
 ```
 embodied-policy-zoo/
+├── algos/            # 算法实现：ppo（状态/视觉）、后续 dt/iql
 ├── configs/          # 所有训练配置（ACT/BC、消融分组，YAML 用路径占位符）
-├── envs/             # 环境适配层（对接 mujoco-studio-lab 的 PushCubeEnv）
+├── utils/            # 评估 / 录屏 / 日志工具
+├── envs/             # 环境适配层（对接 mujoco-studio-lab 的 pushcube-envs 包）
 ├── scripts/          # 训练 / 评估 / 消融 / 绘图 / 演示录制（含 run.py 一键入口）
 ├── results/          # 实验图表、量化表格、日志
 ├── assets/           # 演示视频、结果截图
@@ -262,6 +264,12 @@ BC@4000=42% 与主评估交叉验证一致。
   rollout 成功率峰值 7%；诚实记录 90% 目标未达成的物理原因分析。新增通用录制工具
   `utils/record_video.py`（三视角），产出 3 条成功轨迹视频（`docs/STATE_PPO_CONVERGENCE.md`）。
 
+- **视觉观测管线**：环境新增 `obs_mode='rgb'` 与两档离屏渲染（训练档 84×84 灰度几何
+  代理 **~482fps**、演示档 224×224 完整场景），CHW + [0,1] 归一化对齐 SB3 CNN；修复重置
+  图像缓存 / 随机初始状态可复现 / 动作归一化三类问题，统一四层目录结构。新增视觉训练
+  脚本 `algos/ppo/train_rgb_ppo.py` 与验证脚本 `scripts/verify_vision_pipeline.py`（9 项全
+  PASS）。详见 `docs/VISION_PIPELINE_REPORT.md`。
+
 ---
 
 ## 8. 后续规划
@@ -284,9 +292,12 @@ BC@4000=42% 与主评估交叉验证一致。
 
 ```
 embodied-policy-zoo/
+├── algos/                        # 算法实现（ppo/ 状态 + 视觉，后续 dt/iql）
+│   └── ppo/                      # train_state_ppo / train_rgb_ppo / guided_reward
 ├── configs/                      # 训练配置（占位符路径，可直接复现）
 │   ├── act_push_cube/            # 主配置 + ablation/ + ablations/ 分组
 │   └── README.md
+├── utils/                        # 评估 / 录屏 / 日志工具
 ├── envs/                         # 环境适配层（路径解析 + 跨仓对接说明）
 ├── scripts/                      # 一键入口 run.py 及各训练/评估/绘图/录制脚本
 ├── results/
@@ -319,6 +330,7 @@ embodied-policy-zoo/
 | `docs/DEMO_VIDEO_REPORT.md` | 演示视频说明 |
 | `docs/PROJECT_RETROSPECTIVE.md` | 项目复盘与后续铺垫 |
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
+| `docs/VISION_PIPELINE_REPORT.md` | 视觉观测管线（两档离屏渲染/几何代理 482fps/三类问题修复/目录解耦） |
 | `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |
 | `docs/STATE_PPO_TRAINING.md` | 状态 PPO 训练/评估脚本 + 学习信号快速验证 |
 | `docs/STATE_PPO_CONVERGENCE.md` | 训练收敛调优 / 90%目标分析 / 推理可视化视频 |

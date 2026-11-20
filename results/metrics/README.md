@@ -19,3 +19,5 @@
 | `PPO_TRAIN_CURVE.png` / `PPO_TRAIN_CURVE_TUNED.png` | PPO 基线/调优训练曲线截图（奖励/成功率/价值损失） |
 | `PPO_TUNING_SUMMARY.json` | 训练调优量化汇总（基线震荡、调优点、stochastic 成功率 3%） |
 | `PPO_BASELINE_PROGRESS.csv` / `PPO_TUNED_PROGRESS.csv` | PPO 原始训练日志 |
+| `VISION_PIPELINE_VERIFY.json` | 视觉管线 9 项验证全 PASS（观测兼容/两档渲染/缓存失效/随机种子/动作归一化/check_env/训练档 481.8fps） |
+| `CNN_PPO_VISION_SMOKE.json` | SB3 CnnPolicy + rgb 观测闭环与 state PPO 无回归冒烟结果 |

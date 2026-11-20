@@ -1,0 +1,16 @@
+{
+  "obs_mode_compatibility": {
+    "state": "PASS",
+    "both": "PASS",
+    "image": "PASS",
+    "rgb": "PASS"
+  },
+  "get_rgb_image_presets": "PASS",
+  "reset_cache_invalidation": "PASS",
+  "reproducible_random_start": "PASS",
+  "action_normalization": "PASS",
+  "check_env_state": "PASS",
+  "check_env_rgb": "PASS",
+  "train_capture_fps": 481.8,
+  "throughput_ge_200fps": "PASS"
+}
