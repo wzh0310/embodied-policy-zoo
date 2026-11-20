@@ -14,3 +14,5 @@
 | `LOSS_CURVE_COMPARISON.png` / `SUCCESS_CURVE.png` / `DATA_ABLATION_CURVE.png` | 三张对比曲线图 |
 | `RANDOM_POLICY_BASELINE.json` | SB3 环境适配验证 + 随机策略 10 回合基线（平均奖励 -3.15 / 成功率 0% / 4 并行吞吐） |
 | `SB3_PPO_SMOKE.json` | SB3 二次验证 + PPO(MLP) 100 步最小闭环（累计奖励 -6.1341，无报错） |
+| `PPO_STATE_SIGNAL_CHECK.json` | 状态 PPO 3 万步短训评估曲线（奖励 -3.15→-1.48，rollout 成功率 0→4%） |
+| `PPO_STATE_EVAL50.json` | 状态 PPO 50 回合确定性评估（成功率 0%，平均奖励 -1.4832） |

@@ -253,6 +253,11 @@ BC@4000=42% 与主评估交叉验证一致。
 - **最小闭环**：`PPO("MlpPolicy")` + `state` 观测交互 100 步，动作/观测/奖励格式正确、无报错
   （`scripts/verify_sb3_ppo_closedloop.py`，数据 `results/metrics/SB3_PPO_SMOKE.json`）。
 
+- **状态 PPO 训练/评估**：`algos/ppo/train_state_ppo.py`（50 万步 / n_steps 2048 / lr 3e-4 /
+  ent_coef 0.01，含 checkpoint + TensorBoard）+ `utils/evaluate.py`（固定 50 回合三指标）。
+  3 万步短训验证学习信号有效：奖励 -3.15 → -1.48，rollout 成功率 0→4%
+  （`docs/STATE_PPO_TRAINING.md`）。
+
 ---
 
 ## 8. 后续规划
@@ -311,7 +316,8 @@ embodied-policy-zoo/
 | `docs/PROJECT_RETROSPECTIVE.md` | 项目复盘与后续铺垫 |
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
 | `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |
+| `docs/STATE_PPO_TRAINING.md` | 状态 PPO 训练/评估脚本 + 学习信号快速验证 |
 
 ---
 
-**版本**：`v0.0.8-rl-closed-loop`（环境 API 合规校验 + SB3 二次验证 + PPO 最小交互闭环）。
+**版本**：`v0.0.9-state-ppo`（状态 PPO 训练与评估脚本 + 学习信号快速验证）。

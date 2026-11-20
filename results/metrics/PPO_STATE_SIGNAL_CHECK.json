@@ -1,0 +1,72 @@
+{
+  "total_timesteps": 30000,
+  "final_model": "/data/wzh/robot/outputs/ppo_signal/ppo_state_signal_check/final_model.zip",
+  "eval_history": [
+    {
+      "timesteps": 5000,
+      "n_episodes": 20,
+      "deterministic": true,
+      "success_rate": 0.0,
+      "success_count": 0,
+      "mean_episode_steps": 50.0,
+      "std_episode_steps": 0.0,
+      "mean_episode_reward": -1.6297,
+      "std_episode_reward": 0.0
+    },
+    {
+      "timesteps": 10000,
+      "n_episodes": 20,
+      "deterministic": true,
+      "success_rate": 0.0,
+      "success_count": 0,
+      "mean_episode_steps": 50.0,
+      "std_episode_steps": 0.0,
+      "mean_episode_reward": -1.7822,
+      "std_episode_reward": 0.0
+    },
+    {
+      "timesteps": 15000,
+      "n_episodes": 20,
+      "deterministic": true,
+      "success_rate": 0.0,
+      "success_count": 0,
+      "mean_episode_steps": 50.0,
+      "std_episode_steps": 0.0,
+      "mean_episode_reward": -1.7069,
+      "std_episode_reward": 0.0
+    },
+    {
+      "timesteps": 20000,
+      "n_episodes": 20,
+      "deterministic": true,
+      "success_rate": 0.0,
+      "success_count": 0,
+      "mean_episode_steps": 50.0,
+      "std_episode_steps": 0.0,
+      "mean_episode_reward": -1.745,
+      "std_episode_reward": 0.0
+    },
+    {
+      "timesteps": 25000,
+      "n_episodes": 20,
+      "deterministic": true,
+      "success_rate": 0.0,
+      "success_count": 0,
+      "mean_episode_steps": 50.0,
+      "std_episode_steps": 0.0,
+      "mean_episode_reward": -1.8727,
+      "std_episode_reward": 0.0
+    },
+    {
+      "timesteps": 30000,
+      "n_episodes": 20,
+      "deterministic": true,
+      "success_rate": 0.0,
+      "success_count": 0,
+      "mean_episode_steps": 50.0,
+      "std_episode_steps": 0.0,
+      "mean_episode_reward": -1.7612,
+      "std_episode_reward": 0.0
+    }
+  ]
+}

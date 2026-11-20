@@ -1,0 +1,10 @@
+{
+  "n_episodes": 50,
+  "deterministic": true,
+  "success_rate": 0.0,
+  "success_count": 0,
+  "mean_episode_steps": 50.0,
+  "std_episode_steps": 0.0,
+  "mean_episode_reward": -1.4832,
+  "std_episode_reward": 0.0
+}
