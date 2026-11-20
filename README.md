@@ -290,4 +290,4 @@ embodied-policy-zoo/
 
 ---
 
-**版本**：`v0.6.0-project-structure`（结构化整理 + 一键复现 + 结果归档 + 完整文档）。
+**版本**：`v0.0.6-project-structure`（结构化整理 + 一键复现 + 结果归档 + 完整文档）。
