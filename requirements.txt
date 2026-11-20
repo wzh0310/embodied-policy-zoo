@@ -36,3 +36,9 @@ av==15.1.0                # LeRobot 0.7.0 视频编解码兼容版本
 #    全部验证通过；cu124 是与驱动 12.4 匹配的最高官方 wheel。
 # 2) 本仓库的 push_cube 环境来自兄弟仓库 mujoco-studio-lab，需单独克隆并设置
 #    STUDIO_LAB_ROOT（见 README「快速上手」）。
+
+# ---- 强化学习基座（SB3，装在 mujoco 环境，与 lerobot 环境隔离）----
+# pip install "stable-baselines3[extra]" opencv-python tensorboard
+stable-baselines3[extra]==2.9.2
+opencv-python
+tensorboard

@@ -12,3 +12,4 @@
 | `CHECKPOINT_CURVE.json` | 各 checkpoint 成功率（成功率随步数曲线原始数据） |
 | `DATA_ABLATION.json` | 数据量消融（20/40/63）原始指标 |
 | `LOSS_CURVE_COMPARISON.png` / `SUCCESS_CURVE.png` / `DATA_ABLATION_CURVE.png` | 三张对比曲线图 |
+| `RANDOM_POLICY_BASELINE.json` | SB3 环境适配验证 + 随机策略 10 回合基线（平均奖励 -3.15 / 成功率 0% / 4 并行吞吐） |

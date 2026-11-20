@@ -1,0 +1,137 @@
+{
+  "env_id": "PushCube-v0",
+  "obs_mode_baseline": "state",
+  "n_parallel_envs": 4,
+  "n_eval_episodes": 10,
+  "seed": 20241120,
+  "vector_env_checks": {
+    "obs_shape": [
+      4,
+      13
+    ],
+    "obs_dtype": "float32",
+    "reward_shape": [
+      4
+    ],
+    "reward_dtype": "float64",
+    "done_shape": [
+      4
+    ],
+    "done_dtype": "bool",
+    "observation_space": "Box([-3.  -3.  -3.  -3.  -3.  -3.  -3.   0.3 -0.4  0.7  0.3 -0.4  0.7], [3.  3.  3.  3.  3.  3.  3.  1.3 0.4 0.9 1.3 0.4 0.9], (13,), float32)",
+    "action_space": "Box([-0.02 -0.02 -0.02  0.  ], [0.02 0.02 0.02 1.  ], (4,), float32)",
+    "throughput_state_only": {
+      "steps_per_batch": 400,
+      "vec_transitions_per_sec": 3301.5,
+      "single_transitions_per_sec": 1559.4,
+      "speedup_x": 2.12
+    },
+    "throughput_with_render": {
+      "steps_per_batch": 60,
+      "vec_transitions_per_sec": 24.3,
+      "single_transitions_per_sec": 8.1,
+      "speedup_x": 2.99
+    }
+  },
+  "episodes": [
+    {
+      "episode": 1,
+      "reward": -3.0765,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 2,
+      "reward": -3.0999,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 3,
+      "reward": -3.1952,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 4,
+      "reward": -3.3231,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 5,
+      "reward": -3.2676,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 6,
+      "reward": -3.0904,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 7,
+      "reward": -3.0772,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 8,
+      "reward": -3.1654,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 9,
+      "reward": -3.0723,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    },
+    {
+      "episode": 10,
+      "reward": -3.1237,
+      "steps": 50,
+      "success": false,
+      "truncated": true
+    }
+  ],
+  "summary": {
+    "mean_reward": -3.1491,
+    "std_reward": 0.0834,
+    "success_rate": 0.0,
+    "success_count": 0,
+    "mean_steps": 50.0
+  },
+  "versions": {
+    "python": "3.12.16",
+    "numpy": "2.5.5",
+    "torch": "2.15.0+cu132",
+    "gymnasium": "1.4.0",
+    "stable_baselines3": "2.9.2",
+    "MUJOCO_GL": "egl"
+  },
+  "offscreen_render": {
+    "image_shape": [
+      224,
+      224,
+      3
+    ],
+    "dtype": "uint8",
+    "render_shape": [
+      224,
+      224,
+      3
+    ],
+    "ok": true
+  }
+}
