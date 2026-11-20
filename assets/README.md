@@ -8,8 +8,8 @@
 | 文件 | 内容 | 实验条件 |
 |---|---|---|
 | `demo_short.mp4` | **主演示**：4 个成功回合合成，13.8 秒，双视角（左第三人称全局 / 右第一人称观测），896×224 | 最优 ACT `chunk40` checkpoint `004000`；4 个成功种子最终距离 0.9–2.5 cm |
-| `dual_view.mp4` | 单回合双视角逐帧推理 | 最优 ACT checkpoint，成功回合 |
-| `success_rollout.mp4` | 策略单视角成功 rollout | 最优 ACT checkpoint |
+| `dual_view.mp4` | 单回合双视角逐帧推理，约 3.4 秒 | 最优 ACT checkpoint，成功回合 |
+| `success_rollout.mp4` | 策略单视角成功 rollout，约 4.0 秒 | 最优 ACT checkpoint |
 | `expert_demo.mp4` | 专家推动轨迹回放 | 专家演示数据 |
 
 ## figures/

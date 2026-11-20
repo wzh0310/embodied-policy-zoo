@@ -133,7 +133,7 @@ def main():
     out = args.out if os.path.isabs(args.out) else os.path.join(REPO, "results/videos", args.out)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     from lerobot.utils.io_utils import write_video
-    write_video(out, np.stack(frames), fps=50)
+    write_video(out, np.stack(frames), fps=10)
     print("[record] wrote %s frames=%d shape=%s seed=%d dist=%.4f" % (
         out, len(frames), np.stack(frames).shape, seed, dist))
     print("RECORD DONE")

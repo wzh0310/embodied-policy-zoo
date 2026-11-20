@@ -112,7 +112,7 @@ def main():
     out = args.out if os.path.isabs(args.out) else os.path.join(REPO, args.out)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     from lerobot.utils.io_utils import write_video
-    write_video(out, np.stack(frames), fps=50)
+    write_video(out, np.stack(frames), fps=10)
     print(f"[dual] wrote {out} frames={len(frames)} shape={np.stack(frames).shape} seed={seed} dist={dist:.4f}")
     print("DUAL_VIEW DONE")
 
