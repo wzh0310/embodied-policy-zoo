@@ -31,6 +31,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv  # noqa:
 
 from envs.paths import OUTPUTS, setup_sys_path  # noqa: E402
 from utils.evaluate import make_eval_env, rollout_metrics  # noqa: E402
+from algos.ppo.guided_reward import GuidedRewardWrapper  # noqa: E402
 
 setup_sys_path()
 import pushcube_envs  # noqa: E402,F401  触发 gym 注册
@@ -56,13 +57,16 @@ def parse_args():
     ap.add_argument("--save-freq", type=int, default=50_000, help="checkpoint 保存间隔(步)")
     ap.add_argument("--out-dir", default=str(OUTPUTS / "ppo_state"))
     ap.add_argument("--name", default="ppo_state_s0")
+    ap.add_argument("--guided-reward", action="store_true", help="启用训练侧引导式奖励 wrapper")
     return ap.parse_args()
 
 
-def make_train_env(n_envs, seed):
+def make_train_env(n_envs, seed, guided=False):
     def make_fn(rank):
         def _f():
             env = gym.make(GYM_ID, obs_mode="state", disable_env_checker=True)
+            if guided:
+                env = GuidedRewardWrapper(env)
             env.reset(seed=seed + rank)
             return env
         return _f
@@ -114,7 +118,7 @@ def main():
         args.ent_coef, args.n_envs), flush=True)
     print("输出目录: %s" % out_dir, flush=True)
 
-    train_env = make_train_env(args.n_envs, args.seed)
+    train_env = make_train_env(args.n_envs, args.seed, guided=args.guided_reward)
     model = PPO(
         "MlpPolicy", train_env,
         n_steps=args.n_steps, batch_size=args.batch_size,

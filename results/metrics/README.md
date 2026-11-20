@@ -16,3 +16,6 @@
 | `SB3_PPO_SMOKE.json` | SB3 二次验证 + PPO(MLP) 100 步最小闭环（累计奖励 -6.1341，无报错） |
 | `PPO_STATE_SIGNAL_CHECK.json` | 状态 PPO 3 万步短训评估曲线（奖励 -3.15→-1.48，rollout 成功率 0→4%） |
 | `PPO_STATE_EVAL50.json` | 状态 PPO 50 回合确定性评估（成功率 0%，平均奖励 -1.4832） |
+| `PPO_TRAIN_CURVE.png` / `PPO_TRAIN_CURVE_TUNED.png` | PPO 基线/调优训练曲线截图（奖励/成功率/价值损失） |
+| `PPO_TUNING_SUMMARY.json` | 训练调优量化汇总（基线震荡、调优点、stochastic 成功率 3%） |
+| `PPO_BASELINE_PROGRESS.csv` / `PPO_TUNED_PROGRESS.csv` | PPO 原始训练日志 |

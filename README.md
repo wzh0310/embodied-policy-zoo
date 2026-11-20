@@ -258,6 +258,10 @@ BC@4000=42% 与主评估交叉验证一致。
   3 万步短训验证学习信号有效：奖励 -3.15 → -1.48，rollout 成功率 0→4%
   （`docs/STATE_PPO_TRAINING.md`）。
 
+- **训练收敛调优与视频**：基线 lr 3e-4 出现价值损失震荡，降 lr 至 1e-4 + 引导奖励后
+  rollout 成功率峰值 7%；诚实记录 90% 目标未达成的物理原因分析。新增通用录制工具
+  `utils/record_video.py`（三视角），产出 3 条成功轨迹视频（`docs/STATE_PPO_CONVERGENCE.md`）。
+
 ---
 
 ## 8. 后续规划
@@ -317,7 +321,8 @@ embodied-policy-zoo/
 | `docs/SB3_SETUP_REPORT.md` | SB3 依赖安装 / 向量化适配 / 随机策略基线 |
 | `docs/ENV_COMPLIANCE_REPORT.md` | 环境 API 合规校验 / SB3 二次验证 / PPO 最小闭环 |
 | `docs/STATE_PPO_TRAINING.md` | 状态 PPO 训练/评估脚本 + 学习信号快速验证 |
+| `docs/STATE_PPO_CONVERGENCE.md` | 训练收敛调优 / 90%目标分析 / 推理可视化视频 |
 
 ---
 
-**版本**：`v0.0.9-state-ppo`（状态 PPO 训练与评估脚本 + 学习信号快速验证）。
+**版本**：`v0.1.0-ppo-convergence`（PPO 收敛调优 + 通用推理视频录制工具 + 成功轨迹演示）。

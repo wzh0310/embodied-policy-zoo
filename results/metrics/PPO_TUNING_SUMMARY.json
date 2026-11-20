@@ -1,0 +1,33 @@
+{
+  "task": "PushCube-v0 state-input PPO training and convergence tuning",
+  "baseline": {
+    "total_timesteps_planned": 300000,
+    "total_timesteps_completed": 122880,
+    "n_envs": 4,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.01,
+    "rollout_success_rate_peak": 0.08,
+    "eval_success_rate": 0.0,
+    "issue": "value_loss oscillated 0.03 -> 2.2, explained_variance collapsed 0.78 -> 0.08"
+  },
+  "tuned": {
+    "total_timesteps": 60000,
+    "n_envs": 1,
+    "learning_rate": 0.0001,
+    "batch_size": 128,
+    "ent_coef": 0.02,
+    "guided_reward": true,
+    "rollout_success_rate_peak": 0.07,
+    "eval_success_rate": 0.0,
+    "mean_raw_episode_reward": -1.48
+  },
+  "stochastic_evaluation": {
+    "method": "fixed per-episode model seed, random action sampling",
+    "episodes": 200,
+    "successes": 6,
+    "success_rate": 0.03,
+    "reproducible_success_seeds": [11, 47, 75, 116, 161, 196]
+  },
+  "target_90pct_achieved": false,
+  "conclusion": "From-scratch PPO on this dense-shaping task plateaus at low single-digit percent success; see docs/STATE_PPO_CONVERGENCE.md for analysis."
+}
